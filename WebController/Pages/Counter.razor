@@ -1,18 +1,55 @@
 ﻿@page "/counter"
+@inject CameraService camSv
 
 <PageTitle>Counter</PageTitle>
 
-<h1>Counter</h1>
+<h1>Dashboard</h1>
 
-<p role="status">Current count: @currentCount</p>
+<section class="available-cams">
+    <h3>Available Cameras</h3>
 
-<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+    <div>
+
+        @if (camSv.Cameras.Count > 0)
+        {
+            @foreach (Camera camera in camSv.Cameras)
+            {
+                <div class="camera">
+                    <h3>@camera.DeviceName</h3>
+                    <dl>
+                        <dt>DeviceName</dt>
+                        <dd>@camera.DeviceName</dd>
+
+                        <dt>ID</dt>
+                        <dd>@camera.ID</dd>
+
+                        <dt>IsLiveViewOn</dt>
+                        <dd>@camera.IsLiveViewOn</dd>
+
+                        <dt>IsRecordAvailable</dt>
+                        <dd>@camera.IsRecordAvailable</dd>
+
+                        <dt>IsDisposed</dt>
+                        <dd>@camera.IsDisposed</dd>
+                    </dl>
+
+                    <button disabled="@camera.SessionOpen!" @onclick="() => camSv.OpenSession(camera)">Create Session</button>
+
+                    <button disabled="@camera.SessionOpen" @onclick="() => camSv.Capture(camera)">Capture</button>
+                </div>
+            }
+        }
+        else
+        {
+            <h2>No Cameras Found</h2>
+        }
+
+    </div>
+
+    <h4>Save to: @camSv.ImageSaveDirectory</h4>
+
+</section>
 
 @code {
-    private int currentCount = 0;
 
-    private void IncrementCount()
-    {
-        currentCount++;
-    }
 }
