@@ -1,4 +1,4 @@
-﻿@page "/counter"
+﻿@page "/dashboard"
 @inject CameraService camSv
 
 <PageTitle>Counter</PageTitle>
@@ -31,11 +31,21 @@
 
                         <dt>IsDisposed</dt>
                         <dd>@camera.IsDisposed</dd>
+
+                        <dt>Session Open</dt>
+                        <dd>@camera.SessionOpen</dd>
                     </dl>
 
-                    <button disabled="@camera.SessionOpen!" @onclick="() => camSv.OpenSession(camera)">Create Session</button>
+                    @*@if (!camera.SessionOpen)
+                    {
+                        <button @onclick="() => camSv.OpenSession(camera)">Create Session</button>
+                    }
+                    else
+                    {
+                        <button @onclick="() => camera.CloseSession()">Close Session</button>
+                    }*@
 
-                    <button disabled="@camera.SessionOpen" @onclick="() => camSv.Capture(camera)">Capture</button>
+                    <button disabled="@(!camera.SessionOpen)" @onclick="() => camSv.Capture(camera)">Capture</button>
                 </div>
             }
         }
@@ -47,6 +57,12 @@
     </div>
 
     <h4>Save to: @camSv.ImageSaveDirectory</h4>
+
+</section>
+
+<section class="live-view">
+
+
 
 </section>
 
