@@ -15,7 +15,7 @@ namespace WebController.Services
 
         public string ImageSaveDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), "RemotePhoto");
 
-        private AlertService alertSv;
+        private readonly AlertService alertSv;
 
         private bool isInit = false;
 
@@ -148,7 +148,38 @@ namespace WebController.Services
             // Heavy
         }
 
+        private void Camera_LiveViewStopped(Camera sender)
+        {
+            alertSv.Event(nameof(Camera_LiveViewStopped), sender.DeviceName, "IsLiveViewOn: " + sender.IsLiveViewOn);
+        }
+
         #endregion
+
+        const int LiveViewWaitTime = 200;
+
+        public async Task LiveView_Start(Camera cam)
+        {
+            if (cam.IsLiveViewOn) return;
+
+            cam.StartLiveView();
+            cam.LiveViewStopped += Camera_LiveViewStopped;
+
+            alertSv.Notify("LiveView started", cam.DeviceName);
+
+            await Task.Delay(LiveViewWaitTime);
+        }
+
+        public async Task LiveView_Stop(Camera cam)
+        {
+            if (!cam.IsLiveViewOn) return;
+
+            cam.StopLiveView();
+            cam.LiveViewStopped -= Camera_LiveViewStopped;
+
+            alertSv.Notify("LiveView stopped", cam.DeviceName);
+
+            await Task.Delay(LiveViewWaitTime);
+        }
 
     }
 }

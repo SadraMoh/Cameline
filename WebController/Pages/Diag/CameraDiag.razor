@@ -35,11 +35,34 @@
 
     <button disabled="@(!Camera.SessionOpen)" @onclick="() => camSv.Capture(Camera)">Capture</button>
 
+    <br />
+
+    <h4>Live View</h4>
+
+    <button disabled="@(!Camera.SessionOpen || Camera.IsLiveViewOn)" @onclick="() => camStartLiveView(Camera)">Start</button>
+    <button disabled="@(!Camera.SessionOpen || !Camera.IsLiveViewOn)" @onclick="() => camStopLiveView(Camera)">Stop</button>
+
+    <img />
+
 </div>
 
 @code {
     [Parameter]
     public Camera Camera { get; set; }
+
+    async Task camStartLiveView(Camera cam)
+    {
+        camSv.LiveView_Start(cam);
+        await Task.Delay(200);
+        await InvokeAsync(StateHasChanged);
+    }
+
+    async Task camStopLiveView(Camera cam)
+    {
+        camSv.LiveView_Stop(cam);
+        await Task.Delay(200);
+        await InvokeAsync(StateHasChanged);
+    }
 
     protected override Task OnParametersSetAsync()
     {
