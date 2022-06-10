@@ -11,6 +11,7 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
 
 builder.Services.AddSingleton<CameraService>();
+builder.Services.AddSingleton<AlertService>();
 
 var app = builder.Build();
 

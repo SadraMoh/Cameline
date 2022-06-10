@@ -1,0 +1,51 @@
+﻿@inject CameraService camSv
+
+<div class="camera">
+
+    <h3>@Camera.DeviceName</h3>
+
+    <dl>
+        <dt>DeviceName</dt>
+        <dd>@Camera.DeviceName</dd>
+
+        <dt>ID</dt>
+        <dd>@Camera.ID</dd>
+
+        <dt>IsLiveViewOn</dt>
+        <dd>@Camera.IsLiveViewOn</dd>
+
+        <dt>IsRecordAvailable</dt>
+        <dd>@Camera.IsRecordAvailable</dd>
+
+        <dt>IsDisposed</dt>
+        <dd>@Camera.IsDisposed</dd>
+
+        <dt>Session Open</dt>
+        <dd>@Camera.SessionOpen</dd>
+    </dl>
+
+    @if (!Camera.SessionOpen)
+    {
+        <button @onclick="() => camSv.OpenSession(Camera)">Create Session</button>
+    }
+    else
+    {
+        <button @onclick="() => camSv.CloseSession(Camera)">Close Session</button>
+    }
+
+    <button disabled="@(!Camera.SessionOpen)" @onclick="() => camSv.Capture(Camera)">Capture</button>
+
+</div>
+
+@code {
+    [Parameter]
+    public Camera Camera { get; set; }
+
+    protected override Task OnParametersSetAsync()
+    {
+
+
+        return base.OnParametersSetAsync();
+    }
+
+}

@@ -1,0 +1,50 @@
+﻿@page "/diag"
+@inject CameraService camSv
+
+<PageTitle>Counter</PageTitle>
+
+<h1>Dashboard</h1>
+
+<section class="available-cams">
+    <h3>Available Cameras</h3>
+    <button @onclick="() => camSv.GetCameras()">Refresh</button>
+
+    <div>
+
+        @if (camSv.Cameras.Count > 0)
+        {
+            @foreach (Camera camera in camSv.Cameras)
+            {
+                <CameraDiag Camera="camera"/>
+            }
+        }
+        else
+        {
+            <h2>No Cameras Found</h2>
+        }
+
+    </div>
+
+
+    <hr />
+
+    <h4>Save to: @camSv.ImageSaveDirectory</h4>
+
+</section>
+
+<section class="live-view">
+
+
+
+</section>
+
+@code {
+
+    protected override void OnInitialized()
+    {
+        this.camSv.GetCameras();
+
+        base.OnInitialized();
+    }
+
+}

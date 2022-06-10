@@ -9,28 +9,27 @@ namespace WebController.Services
 {
     public class CameraService
     {
+        CanonAPI APIHandler = new CanonAPI();
+
         public List<Camera> Cameras = new List<Camera>();
-        public Camera MainCamera { get => this.Cameras.First(); }
 
         public string ImageSaveDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), "RemotePhoto");
 
+        private AlertService alertSv;
 
-        CanonAPI APIHandler = new CanonAPI();
+        private bool isInit = false;
 
-        bool Error = false;
-
-        //ManualResetEvent WaitEvent = new ManualResetEvent(false);
-
-        public CameraService()
+        public CameraService(AlertService alertSv)
         {
-            Cameras = APIHandler.GetCameraList();
+            GetCameras();
 
-            if (!OpenSession())
-            {
-                Console.WriteLine("No camera found. Please plug in camera");
-                APIHandler.CameraAdded += APIHandler_CameraAdded;
-                
-            }
+            APIHandler.CameraAdded += APIHandler_CameraAdded;
+
+            this.alertSv = alertSv;
+
+            isInit = true;
+
+            alertSv.Notify("Found Devices", $"[{string.Join(", ", Cameras.ConvertAll(cam => cam.DeviceName))}]");
         }
 
         ~CameraService()
@@ -42,86 +41,111 @@ namespace WebController.Services
             });
         }
 
-        public void Capture(Camera cam)
+        /// <summary>
+        /// Check for available cameras and update <see cref="Cameras"/>
+        /// </summary>
+        public List<Camera> GetCameras() => this.Cameras = APIHandler.GetCameraList();
+
+        /// <summary>
+        /// Opens a session with the camera and binds camera events
+        /// </summary>
+        /// <param name="cam"></param>
+        public void OpenSession(Camera cam)
+        {
+            if (cam.SessionOpen) return;
+
+            cam.OpenSession();
+            cam.LiveViewUpdated += Camera_LiveViewUpdated;
+            cam.ProgressChanged += Camera_ProgressChanged;
+            cam.StateChanged += Camera_StateChanged;
+            cam.DownloadReady += Camera_DownloadReady;
+
+            cam.SetSetting(PropertyID.SaveTo, (int)SaveTo.Host);
+            cam.SetCapacity(4096, int.MaxValue);
+
+            alertSv.Notify("Session established", cam.DeviceName);
+        }
+
+        /// <summary>
+        /// Closes session with the camera and disposes of events
+        /// </summary>
+        /// <param name="cam"></param>
+        public void CloseSession(Camera cam)
+        {
+            if (!cam.SessionOpen) return;
+
+            cam.CloseSession();
+            cam.LiveViewUpdated -= Camera_LiveViewUpdated;
+            cam.ProgressChanged -= Camera_ProgressChanged;
+            cam.StateChanged -= Camera_StateChanged;
+            cam.DownloadReady -= Camera_DownloadReady;
+
+            alertSv.Notify("Session closed", cam.DeviceName);
+        }
+
+        /// <summary>
+        /// Sends a capture command to the <paramref name="cam"/> and save it to <see cref="ImageSaveDirectory"/>
+        /// Captures in [Bulb Mode] if <paramref name="bulbUpVal"/> is set to a value greater than -1
+        /// </summary>
+        /// <param name="cam"></param>
+        /// <param name="bulbUpVal"></param>
+        public void Capture(Camera cam, int bulbUpVal = -1)
         {
             try
             {
-                //WaitEvent.WaitOne();
-                //WaitEvent.Reset();
-
-                if (!Error)
+                if (bulbUpVal >= 0)
                 {
-                    MainCamera.SetSetting(PropertyID.SaveTo, (int)SaveTo.Host);
-                    MainCamera.SetCapacity(4096, int.MaxValue);
-                    Console.WriteLine($"Set image output path to: {ImageSaveDirectory}");
-
-                    Console.WriteLine("Taking photo with current settings...");
-                    CameraValue tv = TvValues.GetValue(MainCamera.GetInt32Setting(PropertyID.Tv));
-                    if (tv == TvValues.Bulb) MainCamera.TakePhotoBulb(2);
-                    else MainCamera.TakePhoto();
-                    //WaitEvent.WaitOne();
-
-                    if (!Error) Console.WriteLine("Photo taken and saved");
+                    alertSv.Notify("Capturing in [BulbMode]...", "bulbUpVal: " + bulbUpVal);
+                    cam.TakePhotoBulbAsync(bulbUpVal);
+                }
+                else
+                {
+                    alertSv.Notify("Capturing...");
+                    cam.TakePhotoAsync();
                 }
             }
-            catch (Exception ex) { Console.WriteLine("Error: " + ex.Message); }
-            finally
+            catch (Exception ex)
             {
-                //MainCamera?.Dispose();
-                //APIHandler.Dispose();
-                //Console.WriteLine("Good bye! (press any key to close)");
-                //Console.ReadKey();
+                alertSv.Error(ex);
             }
-        }
-
-        //public bool OpenSession(Camera cam, Func<Camera, DownloadInfo, bool>? downloadReady = null)
-        //{
-        //    cam.DownloadReady += (Camera sender, DownloadInfo Info) => downloadReady?.Invoke(sender, Info);
-        //    cam.OpenSession();
-
-        //    Console.WriteLine($"Opened session with camera: {cam.DeviceName}");
-        //    return true;
-        //}
-
-        private bool OpenSession()
-        {
-            Cameras = APIHandler.GetCameraList();
-            if (Cameras.Count > 0)
-            {
-                MainCamera.DownloadReady += MainCamera_DownloadReady;
-                MainCamera.OpenSession();
-                Console.WriteLine($"Opened session with camera: {MainCamera.DeviceName}");
-                return true;
-            }
-            else return false;
         }
 
         #region event handlers
 
-        private void MainCamera_DownloadReady(Camera sender, DownloadInfo Info)
+        private void APIHandler_CameraAdded(CanonAPI sender)
         {
-            try
+            GetCameras();
+        }
+
+        // Camera
+
+        private void Camera_DownloadReady(Camera sender, DownloadInfo Info)
+        {
+            alertSv.Event(nameof(Camera_DownloadReady), sender.DeviceName, Info.FileName);
+
+            sender.DownloadFile(Info, ImageSaveDirectory);
+        }
+
+        private void Camera_StateChanged(Camera sender, StateEventID eventID, int parameter)
+        {
+            alertSv.Event(nameof(Camera_StateChanged), sender.DeviceName, eventID.ToString(), parameter.ToString());
+
+            if (eventID == StateEventID.Shutdown && isInit)
             {
-                Console.WriteLine("Starting image download...");
-                sender.DownloadFile(Info, ImageSaveDirectory);
-            }
-            catch (Exception ex) { Console.WriteLine("Error: " + ex.Message); Error = true; }
-            finally {
-                //WaitEvent.Set();
+                // close session if the camera has been disconnected/shutdown
+                CloseSession(sender);
             }
         }
 
-        private void APIHandler_CameraAdded(CanonAPI sender)
+        private void Camera_ProgressChanged(object sender, int progress)
         {
-            try
-            {
-                Console.WriteLine("Camera added event received");
-                if (!OpenSession()) { Console.WriteLine("Sorry, something went wrong. No camera"); Error = true; }
-            }
-            catch (Exception ex) { Console.WriteLine("Error: " + ex.Message); Error = true; }
-            finally {
-                //WaitEvent.Set();
-            }
+            Camera? cam = sender as Camera;
+            alertSv.Event(nameof(Camera_ProgressChanged), cam?.DeviceName ?? "[UNKNOWN]", progress.ToString());
+        }
+
+        private void Camera_LiveViewUpdated(Camera sender, Stream img)
+        {
+            // Heavy
         }
 
         #endregion

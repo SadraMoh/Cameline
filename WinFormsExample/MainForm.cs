@@ -46,7 +46,7 @@ namespace WinFormsExample
                 RefreshCamera();
                 IsInit = true;
             }
-            catch (DllNotFoundException) { ReportError("Canon DLLs not found!", true); }
+            catch (DllNotFoundException) { ReportError("Canon DLLsCamera_ProgressChanged not found!", true); }
             catch (Exception ex) { ReportError(ex.Message, true); }
         }
 
