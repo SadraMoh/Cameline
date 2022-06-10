@@ -1,4 +1,5 @@
 ﻿@inject CameraService camSv
+@inject IJSRuntime js
 
 <div class="camera">
 
@@ -42,33 +43,54 @@
     <button disabled="@(!Camera.SessionOpen || Camera.IsLiveViewOn)" @onclick="() => camStartLiveView(Camera)">Start</button>
     <button disabled="@(!Camera.SessionOpen || !Camera.IsLiveViewOn)" @onclick="() => camStopLiveView(Camera)">Stop</button>
 
-    <img />
+    <img id="imgLive" style="width: 450px; height: 300px;" width="450" height="300"/>
+
+    <button @onclick="invoke">Invoke Js</button>
 
 </div>
 
 @code {
+
     [Parameter]
     public Camera Camera { get; set; }
 
+    private IJSObjectReference? module;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+            module = await js.InvokeAsync<IJSObjectReference>("import", "./modules/CameraDiag.module.js");
+    }
+
     async Task camStartLiveView(Camera cam)
     {
-        camSv.LiveView_Start(cam);
-        await Task.Delay(200);
+        await camSv.LiveView_Start(cam);
         await InvokeAsync(StateHasChanged);
     }
 
     async Task camStopLiveView(Camera cam)
     {
-        camSv.LiveView_Stop(cam);
-        await Task.Delay(200);
+        await camSv.LiveView_Stop(cam);
         await InvokeAsync(StateHasChanged);
     }
 
     protected override Task OnParametersSetAsync()
     {
+        Console.WriteLine("sync " + Camera.DeviceName);
 
+        Camera.LiveViewUpdated += Camera_LiveViewUpdated;
 
         return base.OnParametersSetAsync();
+    }
+
+    private void Camera_LiveViewUpdated(Camera sender, Stream img)
+    {
+        module?.InvokeVoidAsync("receiveLiveImage");
+    }
+
+    private void invoke()
+    {
+        module?.InvokeVoidAsync("showPrompt");
     }
 
 }

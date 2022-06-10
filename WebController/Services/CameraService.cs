@@ -19,6 +19,10 @@ namespace WebController.Services
 
         private bool isInit = false;
 
+        public Stream? LiveImageStream;
+
+        public static readonly string LIVE_KEY = "live";
+
         public CameraService(AlertService alertSv)
         {
             GetCameras();
@@ -146,6 +150,8 @@ namespace WebController.Services
         private void Camera_LiveViewUpdated(Camera sender, Stream img)
         {
             // Heavy
+            LiveImageStream = img;
+            alertSv.Event(nameof(Camera_LiveViewUpdated), "length: " + img.Length);
         }
 
         private void Camera_LiveViewStopped(Camera sender)
@@ -155,7 +161,7 @@ namespace WebController.Services
 
         #endregion
 
-        const int LiveViewWaitTime = 200;
+        const int LiveViewWaitTime = 500;
 
         public async Task LiveView_Start(Camera cam)
         {

@@ -1344,6 +1344,8 @@ namespace EOSDigital.API
 
                         //Update live view
                         LiveViewUpdated?.Invoke(this, stream);
+
+                        System.Threading.Tasks.Task.Delay(100);
                     }
                 }
             }
