@@ -1,0 +1,113 @@
+// -------------------- Sizes -------------------- //
+
+$header-navbar-height: 100px;
+$header-z-index: 1000;
+
+$footer-height: 300px;
+
+$break-1: 1600px;
+$break-2: 1370px;
+$break-3: 864px;
+$break-4: 532px;
+
+// -------------------- General -------------------- //
+
+$background: #141414;
+
+$primary: #1473E6;
+$primary-light: #46A0F5;
+$secondary: #46A0F5;
+
+$danger: #F52632;
+$danger-light: lighten($danger,8%);
+
+$text-1: #FCFCFC;
+$text-2: #CBCBCB;
+$text-3: #A2A2A0;
+$text-4: #70706D;
+
+// -------------------- Border -------------------- //
+
+$border-color: #5a5a5a;
+$border: 1px solid $border-color;
+
+@mixin border-def-radius {
+    border-radius: 4px;
+}
+
+@mixin circle {
+    border-radius: 1000px;
+}
+
+// -------------------- Shadows -------------------- //
+
+$base-shadow-color: #000;
+
+@mixin shadow-xs {
+    box-shadow: 0px 0px 6px 0px rgba($color: $base-shadow-color, $alpha: 0.16);
+}
+
+@mixin shadow-s {
+    box-shadow: 0px 2px 8px 0px rgba($color: $base-shadow-color, $alpha: 0.18);
+}
+
+@mixin shadow-m {
+    box-shadow: 0px 4px 12px 0px rgba($color: $base-shadow-color, $alpha: 0.24);
+}
+
+@mixin shadow-lg {
+    box-shadow: 0px 6px 18px 0px rgba($color: $base-shadow-color, $alpha: 0.30);
+}
+
+@mixin shadow-xlg {
+    box-shadow: 0px 8px 24px 0px rgba($color: $base-shadow-color, $alpha: 0.36);
+}
+
+@mixin shadow-xxlg {
+    box-shadow: 0px 12px 32px 0px rgba($color: $base-shadow-color, $alpha: 0.40);
+}
+
+@mixin shadow-xs-inset {
+    box-shadow: 0px 0px 6px 0px rgba($color: $base-shadow-color, $alpha: 0.16) inset;
+}
+
+@mixin shadow-s-inset {
+    box-shadow: 0px 2px 8px 0px rgba($color: $base-shadow-color, $alpha: 0.18) inset;
+}
+
+@mixin shadow-m-inset {
+    box-shadow: 0px 4px 12px 0px rgba($color: $base-shadow-color, $alpha: 0.24) inset;
+}
+
+@mixin shadow-lg-inset {
+    box-shadow: 0px 6px 18px 0px rgba($color: $base-shadow-color, $alpha: 0.30) inset;
+}
+
+@mixin shadow-xlg-inset {
+    box-shadow: 0px 8px 24px 0px rgba($color: $base-shadow-color, $alpha: 0.36) inset;
+}
+
+@mixin shadow-xxlg-inset {
+    box-shadow: 0px 12px 32px 0px rgba($color: $base-shadow-color, $alpha: 0.40) inset;
+}
+
+
+// -------------------- Cards -------------------- //
+
+$material-1: #373737;
+$material-2: #323232;
+$material-3: #272727;
+$material-4: #212121;
+
+$card-border-color: #3E3E3E;
+
+$card-padding: 8px;
+
+$dropdown-background: #2a2a2a;
+
+@mixin card {
+    background-color: $material-1;
+    @include shadow-m;
+    @include border-def-radius;
+    padding: $card-padding;
+}

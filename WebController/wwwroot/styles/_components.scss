@@ -1,0 +1,326 @@
+@import "vars";
+@import "utility";
+
+//-
+//- Components
+
+// anchor tags
+a,
+.link {
+    color: lighten($color: $secondary, $amount: 2%);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+a:hover,
+.link:hover {
+    color: lighten($color: $secondary, $amount: 10%);
+
+    img {
+        filter: brightness(110%);
+    }
+}
+
+a:active,
+.link:active {
+    color: lighten($color: $primary, $amount: 20%);
+    text-shadow: 0 0 0;
+
+    img {
+        filter: brightness(120%);
+    }
+}
+
+.entry-invis {
+    background-color: transparent;
+    border: 0;
+    font-size: 1em;
+    padding: 6px 8px;
+    color: $text-1;
+}
+
+// BTN
+
+.btn {
+    border: 0;
+    padding: 8px 16px;
+    @include circle;
+    @include trans;
+}
+
+.btn.btn-secondary {
+    background-color: transparent;
+    color: $text-1;
+    border: 2px $text-1 solid;
+    box-sizing: border-box;
+    padding: 6px 14px;
+}
+
+.btn.btn-secondary:hover {
+    background-color: $text-1;
+    color: $material-3;
+}
+
+.btn-invis {
+    background-color: transparent;
+    cursor: pointer;
+    padding: 4px;
+    color: $text-1;
+    @include circle;
+    border: 0;
+    display: flex;
+    justify-items: center;
+    align-items: center;
+}
+
+.mat-btn {
+    border: 0;
+    @include border-def-radius;
+    background-color: $material-2;
+    color: $text-1;
+    padding: 4px;
+    cursor: pointer;
+    @include trans(0.3s);
+    display: flex;
+    align-items: center;
+    justify-items: center;
+}
+
+.mat-btn:hover {
+    @include trans(0.16s);
+    background-color: lighten($color: $material-2, $amount: 8%);
+}
+
+.mat-btn:active {
+    @include transs;
+    background-color: lighten($color: $material-2, $amount: 16%);
+}
+
+.btn-primary {
+    background-color: $primary;
+    color: $text-1;
+
+    > * {
+        color: $text-1;
+    }
+}
+
+.btn-primary:hover {
+    background-color: lighten($color: $primary, $amount: 8%);
+}
+
+.btn-primary:active {
+    @include transs;
+    background-color: lighten($color: $primary, $amount: 16%);
+}
+
+// #endregion Controls
+
+// #region Table
+
+$table-padding: 8px;
+
+.tbl {
+    border-spacing: 0;
+
+    thead {
+        tr {
+            background-color: $material-3;
+
+            th {
+                padding: $table-padding;
+                text-align: left;
+            }
+
+            th:first-child {
+                padding-left: 16px;
+            }
+
+            th:last-child {
+                padding-right: 16px;
+            }
+        }
+    }
+
+    tbody {
+        tr {
+            background-color: $material-1;
+            @include trans(0.32s);
+
+            td {
+                padding: $table-padding;
+            }
+
+            td:first-child {
+                padding-left: 16px;
+            }
+
+            td:last-child {
+                padding-right: 16px;
+            }
+        }
+    }
+}
+
+.tbl.tbl-striped {
+    tbody {
+        tr:nth-child(2n - 1) {
+            background-color: $material-2;
+        }
+    }
+}
+
+.tbl.tbl-hover {
+    tbody {
+        tr:hover {
+            @include trans(0.16s);
+            background-color: lighten($color: $material-1, $amount: 6%);
+        }
+    }
+}
+
+.tbl.tbl-hover.tbl.tbl-striped {
+    tbody {
+        tr:nth-child(2n-1):hover {
+            background-color: lighten($color: $material-1, $amount: 6%);
+        }
+    }
+}
+
+.tbl.round {
+    overflow: hidden;
+    @include border-def-radius;
+}
+
+// #endregion Table
+
+/* width */
+::-webkit-scrollbar {
+    width: 16px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background-color: darken($background, 4%);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: lighten($color: $card-border-color, $amount: 8%);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: darken($color: $primary, $amount: 0%);
+}
+
+//- layout
+
+.container {
+    margin-left: auto;
+    margin-right: auto;
+    @include col;
+}
+
+@media screen and (min-width: $break-1) {
+    .container {
+        width: 1366px;
+    }
+}
+
+@media screen and (max-width: $break-1) and (min-width: $break-2) {
+    .container {
+        width: 1200px;
+    }
+}
+
+@media screen and (max-width: $break-2) and (min-width: $break-3) {
+    .container {
+        width: 820px;
+    }
+}
+
+@media screen and (max-width: $break-3) and (min-width: $break-4) {
+    .container {
+        width: 480px;
+    }
+}
+
+@media screen and (max-width: $break-4) {
+    .container {
+        width: calc(100% - 20px);
+    }
+}
+
+.container-fluid {
+    width: 100%;
+}
+
+$gap-tween-component: 48px;
+
+.gap {
+    gap: 12px;
+}
+
+.gap-tween-component-down {
+    margin-bottom: $gap-tween-component;
+}
+
+.gap-tween-component-up {
+    margin-top: $gap-tween-component;
+}
+
+.page-padding {
+    padding: 20px 0;
+}
+
+.page-gap {
+    gap: 24px;
+}
+
+// -------------------- Implementations -------------------- //
+
+.card {
+    @include card;
+}
+
+.mat-1 {
+    background-color: $material-1;
+}
+
+.mat-2 {
+    background-color: $material-2;
+}
+
+.mat-3 {
+    background-color: $material-3;
+}
+
+.mat-4 {
+    background-color: $material-4;
+}
+
+.border-def-radius,
+.round {
+    @include border-def-radius;
+}
+
+.shadow-xs {
+    @include shadow-xs;
+}
+
+.shadow-s {
+    @include shadow-s;
+}
+
+.shadow-m {
+    @include shadow-m;
+}
+
+.shadow-lg {
+    @include shadow-lg;
+}
+
+.shadow-xlg {
+    @include shadow-xlg;
+}

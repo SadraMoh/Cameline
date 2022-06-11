@@ -1,0 +1,504 @@
+.dummy {
+  background-color: #4a8c95;
+  height: 100px;
+  width: 100px;
+  position: relative;
+  z-index: 100;
+  visibility: hidden;
+}
+
+/** Default Flex Layout */
+.row {
+  display: flex;
+  flex-direction: row;
+  align-content: normal;
+  justify-content: normal;
+  align-items: normal;
+  flex-wrap: nowrap;
+}
+
+.rowr {
+  display: flex;
+  flex-direction: row-reverse;
+  align-content: normal;
+  justify-content: normal;
+  align-items: normal;
+  flex-wrap: nowrap;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+  align-content: normal;
+  justify-content: normal;
+  align-items: normal;
+  flex-wrap: nowrap;
+}
+
+.colr {
+  display: flex;
+  flex-direction: column-reverse;
+  align-content: normal;
+  justify-content: normal;
+  align-items: normal;
+  flex-wrap: nowrap;
+}
+
+.circle {
+  border-radius: 5000px;
+}
+
+.noscroll {
+  /* Optional: show position indicator in red */
+}
+.noscroll ::-webkit-scrollbar {
+  width: 0; /* Remove scrollbar space */
+  background: transparent; /* Optional: just make scrollbar invisible */
+}
+.noscroll ::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+/** convert img color to primary */
+.dummy {
+  background-color: #4a8c95;
+  height: 100px;
+  width: 100px;
+  position: relative;
+  z-index: 100;
+  visibility: hidden;
+}
+
+/** Default Flex Layout */
+.row {
+  display: flex;
+  flex-direction: row;
+  align-content: normal;
+  justify-content: normal;
+  align-items: normal;
+  flex-wrap: nowrap;
+}
+
+.rowr {
+  display: flex;
+  flex-direction: row-reverse;
+  align-content: normal;
+  justify-content: normal;
+  align-items: normal;
+  flex-wrap: nowrap;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+  align-content: normal;
+  justify-content: normal;
+  align-items: normal;
+  flex-wrap: nowrap;
+}
+
+.colr {
+  display: flex;
+  flex-direction: column-reverse;
+  align-content: normal;
+  justify-content: normal;
+  align-items: normal;
+  flex-wrap: nowrap;
+}
+
+.circle {
+  border-radius: 5000px;
+}
+
+.noscroll {
+  /* Optional: show position indicator in red */
+}
+.noscroll ::-webkit-scrollbar {
+  width: 0; /* Remove scrollbar space */
+  background: transparent; /* Optional: just make scrollbar invisible */
+}
+.noscroll ::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+/** convert img color to primary */
+a,
+.link {
+  color: #50a5f6;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+a:hover,
+.link:hover {
+  color: #76b9f8;
+}
+a:hover img,
+.link:hover img {
+  filter: brightness(110%);
+}
+
+a:active,
+.link:active {
+  color: #6eaaf2;
+  text-shadow: 0 0 0;
+}
+a:active img,
+.link:active img {
+  filter: brightness(120%);
+}
+
+.entry-invis {
+  background-color: transparent;
+  border: 0;
+  font-size: 1em;
+  padding: 6px 8px;
+  color: #FCFCFC;
+}
+
+.btn {
+  border: 0;
+  padding: 8px 16px;
+  border-radius: 5000px;
+  transition: all ease 0.2s;
+}
+
+.btn.btn-secondary {
+  background-color: transparent;
+  color: #FCFCFC;
+  border: 2px #FCFCFC solid;
+  box-sizing: border-box;
+  padding: 6px 14px;
+}
+
+.btn.btn-secondary:hover {
+  background-color: #FCFCFC;
+  color: #272727;
+}
+
+.btn-invis {
+  background-color: transparent;
+  cursor: pointer;
+  padding: 4px;
+  color: #FCFCFC;
+  border-radius: 5000px;
+  border: 0;
+  display: flex;
+  justify-items: center;
+  align-items: center;
+}
+
+.mat-btn {
+  border: 0;
+  border-radius: 4px;
+  background-color: #323232;
+  color: #FCFCFC;
+  padding: 4px;
+  cursor: pointer;
+  transition: all ease 0.3s;
+  display: flex;
+  align-items: center;
+  justify-items: center;
+}
+
+.mat-btn:hover {
+  transition: all ease 0.16s;
+  background-color: #464646;
+}
+
+.mat-btn:active {
+  transition: all ease 0.12s;
+  background-color: #5b5b5b;
+}
+
+.btn-primary {
+  background-color: #1473E6;
+  color: #FCFCFC;
+}
+.btn-primary > * {
+  color: #FCFCFC;
+}
+
+.btn-primary:hover {
+  background-color: #3589ed;
+}
+
+.btn-primary:active {
+  transition: all ease 0.12s;
+  background-color: #5b9ff1;
+}
+
+.tbl {
+  border-spacing: 0;
+}
+.tbl thead tr {
+  background-color: #272727;
+}
+.tbl thead tr th {
+  padding: 8px;
+  text-align: left;
+}
+.tbl thead tr th:first-child {
+  padding-left: 16px;
+}
+.tbl thead tr th:last-child {
+  padding-right: 16px;
+}
+.tbl tbody tr {
+  background-color: #373737;
+  transition: all ease 0.32s;
+}
+.tbl tbody tr td {
+  padding: 8px;
+}
+.tbl tbody tr td:first-child {
+  padding-left: 16px;
+}
+.tbl tbody tr td:last-child {
+  padding-right: 16px;
+}
+
+.tbl.tbl-striped tbody tr:nth-child(2n-1) {
+  background-color: #323232;
+}
+
+.tbl.tbl-hover tbody tr:hover {
+  transition: all ease 0.16s;
+  background-color: #464646;
+}
+
+.tbl.tbl-hover.tbl.tbl-striped tbody tr:nth-child(2n-1):hover {
+  background-color: #464646;
+}
+
+.tbl.round {
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 16px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background-color: #0a0a0a;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #525252;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #1473e6;
+}
+
+.container {
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: column;
+  align-content: normal;
+  justify-content: normal;
+  align-items: normal;
+  flex-wrap: nowrap;
+}
+
+@media screen and (min-width: 1600px) {
+  .container {
+    width: 1366px;
+  }
+}
+@media screen and (max-width: 1600px) and (min-width: 1370px) {
+  .container {
+    width: 1200px;
+  }
+}
+@media screen and (max-width: 1370px) and (min-width: 864px) {
+  .container {
+    width: 820px;
+  }
+}
+@media screen and (max-width: 864px) and (min-width: 532px) {
+  .container {
+    width: 480px;
+  }
+}
+@media screen and (max-width: 532px) {
+  .container {
+    width: calc(100% - 20px);
+  }
+}
+.container-fluid {
+  width: 100%;
+}
+
+.gap {
+  gap: 12px;
+}
+
+.gap-tween-component-down {
+  margin-bottom: 48px;
+}
+
+.gap-tween-component-up {
+  margin-top: 48px;
+}
+
+.page-padding {
+  padding: 20px 0;
+}
+
+.page-gap {
+  gap: 24px;
+}
+
+.card {
+  background-color: #373737;
+  box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.24);
+  border-radius: 4px;
+  padding: 8px;
+}
+
+.mat-1 {
+  background-color: #373737;
+}
+
+.mat-2 {
+  background-color: #323232;
+}
+
+.mat-3 {
+  background-color: #272727;
+}
+
+.mat-4 {
+  background-color: #212121;
+}
+
+.border-def-radius,
+.round {
+  border-radius: 4px;
+}
+
+.shadow-xs {
+  box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.16);
+}
+
+.shadow-s {
+  box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.18);
+}
+
+.shadow-m {
+  box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.24);
+}
+
+.shadow-lg {
+  box-shadow: 0px 6px 18px 0px rgba(0, 0, 0, 0.3);
+}
+
+.shadow-xlg {
+  box-shadow: 0px 8px 24px 0px rgba(0, 0, 0, 0.36);
+}
+
+:root {
+  --break-1: 1600px;
+  --break-2: 1370px;
+  --break-3: 864px;
+  --break-4: 532px;
+  font-size: 14px;
+}
+
+#blazor-error-ui {
+  display: none;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  font-family: "poppins", "montserrat", "inconsolata", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  outline: none;
+  border: 0;
+  color: #FCFCFC;
+}
+
+html,
+body {
+  background-color: #141414;
+  overflow-x: hidden;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+ul {
+  list-style-type: none;
+}
+
+img {
+  object-fit: contain;
+  object-position: center;
+}
+
+p {
+  color: #CBCBCB;
+  font-size: 1.25em;
+}
+
+@media only screen and (max-width: 864px) {
+  html,
+body {
+    font-size: 0.8em;
+  }
+}
+.layout-content {
+  min-height: calc(100vh - 400px);
+}
+
+.material-icons {
+  user-select: none;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #212121;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #555555;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #6e6e6e;
+}
+
+a {
+  text-decoration: none;
+  cursor: pointer;
+  transition: all ease 0.32s;
+}
+
+a:hover {
+  color: #46A0F5;
+  transition: all ease 0.16s;
+}
+
+button {
+  cursor: pointer;
+  font-size: 1em;
+}
+
+.material-icons {
+  outline: inherit;
+}
+
+/*# sourceMappingURL=site.css.map */
