@@ -1,3 +1,5 @@
+/* --- {Variables} --- */
+/* --- {Utility} --- */
 .dummy {
   background-color: #4a8c95;
   height: 100px;
@@ -60,6 +62,7 @@
 }
 
 /** convert img color to primary */
+/* --- {Components} --- */
 .dummy {
   background-color: #4a8c95;
   height: 100px;
@@ -404,6 +407,7 @@ a:active img,
   box-shadow: 0px 8px 24px 0px rgba(0, 0, 0, 0.36);
 }
 
+/* --- {site} --- */
 :root {
   --break-1: 1600px;
   --break-2: 1370px;
@@ -412,10 +416,43 @@ a:active img,
   font-size: 14px;
 }
 
+/* Material Icons */
+@font-face {
+  font-family: "Material Symbols Sharp";
+  font-style: normal;
+  font-weight: 400;
+  src: url("../fonts/material-icons.woff2") format("woff2");
+}
+.material-icons {
+  font-family: "Material Symbols Sharp";
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px; /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  user-select: none;
+  outline: inherit;
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+  /* Support for IE. */
+  font-feature-settings: "liga";
+}
+
+/* Blazor Defaults */
 #blazor-error-ui {
   display: none;
 }
 
+/* Reset */
 * {
   padding: 0;
   margin: 0;
@@ -457,10 +494,6 @@ body {
   min-height: calc(100vh - 400px);
 }
 
-.material-icons {
-  user-select: none;
-}
-
 /* width */
 ::-webkit-scrollbar {
   width: 10px;
@@ -495,10 +528,6 @@ a:hover {
 button {
   cursor: pointer;
   font-size: 1em;
-}
-
-.material-icons {
-  outline: inherit;
 }
 
 /*# sourceMappingURL=site.css.map */
