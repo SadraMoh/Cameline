@@ -53,15 +53,13 @@
 
     async Task camStartLiveView(Camera cam)
     {
-        camSv.LiveView_Start(cam);
-        await Task.Delay(200);
+        await camSv.LiveView_Start(cam);
         await InvokeAsync(StateHasChanged);
     }
 
     async Task camStopLiveView(Camera cam)
     {
-        camSv.LiveView_Stop(cam);
-        await Task.Delay(200);
+        await camSv.LiveView_Stop(cam);
         await InvokeAsync(StateHasChanged);
     }
 

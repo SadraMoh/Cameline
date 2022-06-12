@@ -19,6 +19,8 @@ namespace WebController.Services
 
         private bool isInit = false;
 
+        const int TIMEOUTMILISECONDS = 5000;
+
         public CameraService(AlertService alertSv)
         {
             GetCameras();
@@ -155,30 +157,42 @@ namespace WebController.Services
 
         #endregion
 
-        const int LiveViewWaitTime = 200;
-
         public async Task LiveView_Start(Camera cam)
         {
             if (cam.IsLiveViewOn) return;
 
+            var promise = new TaskCompletionSource();
+
+            LiveViewUpdate stopWaiting = (Camera sender, Stream img) => promise.SetResult();
+
             cam.StartLiveView();
+            cam.LiveViewUpdated += stopWaiting;
+
+            await promise.Task.WaitAsync(TimeSpan.FromMilliseconds(TIMEOUTMILISECONDS));
+
+            cam.LiveViewUpdated -= stopWaiting;
             cam.LiveViewStopped += Camera_LiveViewStopped;
 
             alertSv.Notify("LiveView started", cam.DeviceName);
-
-            await Task.Delay(LiveViewWaitTime);
         }
 
         public async Task LiveView_Stop(Camera cam)
         {
             if (!cam.IsLiveViewOn) return;
 
+            var promise = new TaskCompletionSource();
+
+            CameraUpdateHandler stopWaiting = (Camera sender) => promise.SetResult();
+
             cam.StopLiveView();
+            cam.LiveViewStopped += stopWaiting;
+
+            await promise.Task.WaitAsync(TimeSpan.FromMilliseconds(TIMEOUTMILISECONDS));
+
+            cam.LiveViewStopped -= stopWaiting;
             cam.LiveViewStopped -= Camera_LiveViewStopped;
 
             alertSv.Notify("LiveView stopped", cam.DeviceName);
-
-            await Task.Delay(LiveViewWaitTime);
         }
 
     }
