@@ -4,6 +4,7 @@
     font-style: normal;
     font-weight: 100 700;
     src: url(../fonts/material-icons.woff2) format('woff2');
+    font-display: block;
 }
 
 .material-symbols-sharp {
@@ -20,4 +21,9 @@
     direction: ltr;
     -webkit-font-feature-settings: 'liga';
     -webkit-font-smoothing: antialiased;
+    /**/
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
 }

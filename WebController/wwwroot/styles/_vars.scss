@@ -1,9 +1,9 @@
 // -------------------- Sizes -------------------- //
 
-$header-navbar-height: 100px;
+$header-navbar-height: calc(16px + 1.4em);
 $header-z-index: 1000;
 
-$footer-height: 300px;
+$footer-height: 0;
 
 $break-1: 1600px;
 $break-2: 1370px;

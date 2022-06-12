@@ -1,14 +1,56 @@
-﻿<div class="nav">
-    <nav class="col">
-        <div class="nav-item">
-            <NavLink class="nav-link" href="/" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
-            </NavLink>
+﻿<div class="toolbar">
+    <nav class="toolbar-nav">
+    <div class="toolbar-item">
+        <span class="toolbar-link">
+            <span class="material-symbols-sharp">draft</span> File
+        </span>
+        <div class="toolbar-item-content">
+            <div class="toolbar-item">
+                <NavLink class="toolbar-link" href="/newBook">
+                    <span class="material-symbols-sharp">note_add</span> New
+                </NavLink>
+                <div class="toolbar-item-content">
+                    <div class="toolbar-item">
+                        <NavLink class="toolbar-link" href="/newBook">
+                            <span class="material-symbols-sharp">looks_one</span> Single Cam
+                        </NavLink>
+                    </div>
+                    <div class="toolbar-item">
+                        <NavLink class="toolbar-link" href="/newBook">
+                            <span class="material-symbols-sharp">looks_two</span> Double Cam
+                        </NavLink>
+                    </div>
+                </div>
+            </div>
+            <div class="toolbar-item">
+                <span class="toolbar-link">
+                    <span class="material-symbols-sharp">history</span> Recent
+                </span>
+                <div class="toolbar-item-content">
+                    <div class="toolbar-item">
+                        <NavLink class="toolbar-link" href="/book">
+                            C:\Users\User\Documents\Book_1
+                        </NavLink>
+                    </div>
+                    <div class="toolbar-item">
+                        <NavLink class="toolbar-link" href="/book">
+                            C:\Users\User\Documents\Book_2
+                        </NavLink>
+                    </div>
+                    <div class="toolbar-item">
+                        <NavLink class="toolbar-link" href="/book">
+                            C:\Users\User\Documents\Book_3
+                        </NavLink>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="nav-item"> 
-            <NavLink class="nav-link" href="diag">
-                <span class="oi oi-plus" aria-hidden="true"></span> Counter
-            </NavLink>
-        </div>
-    </nav>
+    </div>
+    <div class="toolbar-item">
+        <NavLink class="toolbar-link" href="diag">
+            <span class="material-symbols-sharp">analytics</span> Diag
+        </NavLink>
+    </div>
+</nav>
+
 </div>
