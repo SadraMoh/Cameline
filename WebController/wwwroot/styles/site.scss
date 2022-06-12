@@ -69,10 +69,6 @@ p {
     }
 }
 
-.layout-content {
-    min-height: calc(100vh - calc($footer-height + $header-navbar-height));
-}
-
 // #region custom scrollbar
 /* width */
 ::-webkit-scrollbar {
@@ -121,7 +117,7 @@ button {
     font-size: 1em;
     position: fixed;
     width: 100%;
-    height: $header-navbar-height;
+    height: $toolbar-height;
 
     .toolbar-nav {
         @include row;
@@ -183,6 +179,12 @@ button {
     // toolbar-nav
     .toolbar-nav > .toolbar-item {
 
+        .toolbar-link {
+            height: $toolbar-height;
+            padding-top: unset;
+            padding-bottom: unset;
+        }
+
         .toolbar-item-content {
             top: 100%;
             left: 0;
@@ -219,3 +221,5 @@ button {
         }
     }
 }
+
+/* --- {Book} --- */

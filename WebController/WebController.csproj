@@ -9,7 +9,23 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Pages\Book\NewBook.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\EDSDKLib\EDSDKLib.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\Book\NewBook.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Pages\Book\NewBook.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Pages\Book\NewBook.razor" />
   </ItemGroup>
 
 </Project>

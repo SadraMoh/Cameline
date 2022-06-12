@@ -216,45 +216,20 @@ $table-padding: 8px;
 
 //- layout
 
-.container {
-    margin-left: auto;
-    margin-right: auto;
-    @include col;
-}
-
-@media screen and (min-width: $break-1) {
-    .container {
-        width: 1366px;
-    }
-}
-
-@media screen and (max-width: $break-1) and (min-width: $break-2) {
-    .container {
-        width: 1200px;
-    }
-}
-
-@media screen and (max-width: $break-2) and (min-width: $break-3) {
-    .container {
-        width: 820px;
-    }
-}
-
-@media screen and (max-width: $break-3) and (min-width: $break-4) {
-    .container {
-        width: 480px;
-    }
-}
-
-@media screen and (max-width: $break-4) {
-    .container {
-        width: calc(100% - 20px);
-    }
-}
-
+.container,
 .container-fluid {
     width: 100%;
 }
+
+.page {
+    min-height: 100vh;
+}
+
+.layout-content {
+    margin-top: $toolbar-height;
+    min-height: calc(100vh - #{$toolbar-height});
+}
+
 
 $gap-tween-component: 48px;
 

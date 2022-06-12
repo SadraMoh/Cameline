@@ -299,44 +299,18 @@ a:active img,
   background: #1473e6;
 }
 
-.container {
-  margin-left: auto;
-  margin-right: auto;
-  display: flex;
-  flex-direction: column;
-  align-content: normal;
-  justify-content: normal;
-  align-items: normal;
-  flex-wrap: nowrap;
-}
-
-@media screen and (min-width: 1600px) {
-  .container {
-    width: 1366px;
-  }
-}
-@media screen and (max-width: 1600px) and (min-width: 1370px) {
-  .container {
-    width: 1200px;
-  }
-}
-@media screen and (max-width: 1370px) and (min-width: 864px) {
-  .container {
-    width: 820px;
-  }
-}
-@media screen and (max-width: 864px) and (min-width: 532px) {
-  .container {
-    width: 480px;
-  }
-}
-@media screen and (max-width: 532px) {
-  .container {
-    width: calc(100% - 20px);
-  }
-}
+.container,
 .container-fluid {
   width: 100%;
+}
+
+.page {
+  min-height: 100vh;
+}
+
+.layout-content {
+  margin-top: calc(16px + 1.4em);
+  min-height: calc(100vh - calc(16px + 1.4em));
 }
 
 .gap {
@@ -459,10 +433,6 @@ body {
     font-size: 0.8em;
   }
 }
-.layout-content {
-  min-height: calc(100vh - (0 + 16px + 1.4em));
-}
-
 /* width */
 ::-webkit-scrollbar {
   width: 10px;
@@ -580,6 +550,11 @@ button {
   border-top: 1px solid #4a4a4a;
   margin: 6px 0;
 }
+.toolbar .toolbar-nav > .toolbar-item .toolbar-link {
+  height: calc(16px + 1.4em);
+  padding-top: unset;
+  padding-bottom: unset;
+}
 .toolbar .toolbar-nav > .toolbar-item .toolbar-item-content {
   top: 100%;
   left: 0;
@@ -600,5 +575,7 @@ button {
 .toolbar .toolbar-item-content > .toolbar-item:hover > .toolbar-item-content {
   display: flex;
 }
+
+/* --- {Book} --- */
 
 /*# sourceMappingURL=site.css.map */
