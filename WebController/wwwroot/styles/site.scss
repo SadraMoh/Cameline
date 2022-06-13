@@ -28,10 +28,13 @@
 * {
     padding: 0;
     margin: 0;
-    font-family: "poppins", "montserrat", "inconsolata", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     outline: none;
     border: 0;
     color: $text-1;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 html,
@@ -157,10 +160,13 @@ button {
 
         .toolbar-link {
             padding: 8px 12px;
+            @include trans;
         }
 
         .toolbar-link:hover {
             background-color: lighten($toolbar-material, 8%);
+            @include transs;
+            transition-property: background-color;
         }
 
         .toolbar-link + toolbar-item-content::before {
@@ -226,7 +232,7 @@ button {
 }
 
 /* --- {Drive} --- */
-$default-panel-width: 256px;
+$default-panel-width: 324px;
 
 .drive {
     --info-width: #{$default-panel-width};
@@ -239,13 +245,38 @@ $default-panel-width: 256px;
     flex: 1; // height: 100%;
 
     .info {
-        background-color: $material-3;
+        @include col;
         border-right: $border;
 
         .bookinfo {
+            padding: $panel-padding;
+            @include col;
+            gap: $gap-m;
+            background-color: $material-2;
+            border-bottom: $border;
+
+            .row {
+                -webkit-align-items: center;
+                align-items: center;
+            }
+
+            .title {
+                font-size: 1.65em;
+            }
+
+            .btn {
+                margin-left: auto;
+            }
         }
 
         .pages {
+            @include col;
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            background-color: $material-4;
+            border-bottom: $border;
+            padding: $panel-padding;
         }
     }
 

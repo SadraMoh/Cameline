@@ -39,82 +39,105 @@ a:active,
     color: $text-1;
 }
 
-// BTN
+// -------------------- Forms -------------------- //
 
-.btn {
-    border: 0;
+.textbox {
+    background-color: transparent;
     padding: 8px 16px;
-    @include circle;
+    flex: auto;
+    font-size: 1em;
+    @include border-def-radius;
+    border: #4D4D4D 1px solid;
+    background-color: #2a2a2a;
+}
+
+// #region control
+
+$control-background: #2A2A2A;
+$control-border-color: #4D4D4D;
+$control-border: 1px solid $border-color;
+
+$control-height: 36px;
+
+.control {
+    background-color: $control-background;
+    border: $border;
+    border-radius: $border-radius;
+    color: $text-1;
+    display: flex !important;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    //-
+    @include border-def-radius;
+}
+
+$control-button-background: #373737;
+
+button.control, .material-symbols-sharp.control {
+    background-color: $control-button-background;
+    height: $control-height;
+    width: $control-height;
     @include trans;
 }
 
-.btn.btn-secondary {
-    background-color: transparent;
-    color: $text-1;
-    border: 2px $text-1 solid;
-    box-sizing: border-box;
-    padding: 6px 14px;
-}
-
-.btn.btn-secondary:hover {
-    background-color: $text-1;
-    color: $material-3;
-}
-
-.btn-invis {
-    background-color: transparent;
-    cursor: pointer;
-    padding: 4px;
-    color: $text-1;
-    @include circle;
-    border: 0;
-    display: flex;
-    justify-items: center;
-    align-items: center;
-}
-
-.mat-btn {
-    border: 0;
-    @include border-def-radius;
-    background-color: $material-2;
-    color: $text-1;
-    padding: 4px;
-    cursor: pointer;
-    @include trans(0.3s);
-    display: flex;
-    align-items: center;
-    justify-items: center;
-}
-
-.mat-btn:hover {
-    @include trans(0.16s);
-    background-color: lighten($color: $material-2, $amount: 8%);
-}
-
-.mat-btn:active {
+button.control:hover {
+    background-color: lighten($control-button-background, 12%);
     @include transs;
-    background-color: lighten($color: $material-2, $amount: 16%);
+    transition-property: background-color;
 }
 
-.btn-primary {
-    background-color: $primary;
-    color: $text-1;
+input[type=text].control,
+textarea.control {
+    resize: vertical;
+    @include placeholder($text-4);
+    height: $control-height;
+    min-height: $control-height;
+    padding: 0 8px;
+    color: $text-2;
+    font-size: 1.2em;
+}
 
-    > * {
-        color: $text-1;
+input[type=text].control:disabled,
+input[type=text].control:read-only,
+textarea.control:disabled,
+textarea.control:read-only {
+    background-color: lighten($control-background, 12%);
+    color: $text-3;
+    cursor: text;
+}
+
+.fg {
+}
+
+.fh {
+    @include row;
+
+    > .control {
+        border-radius: 0;
+    }
+
+    .control:not(:first-child) {
+        border-left: none;
+    }
+
+    > .control:first-child {
+        border-top-left-radius: $border-radius;
+        border-bottom-left-radius: $border-radius;
+    }
+
+    > .control:last-child {
+        border-top-right-radius: $border-radius;
+        border-bottom-right-radius: $border-radius;
+    }
+
+    input[type=text].control {
+        flex: 1;
     }
 }
 
-.btn-primary:hover {
-    background-color: lighten($color: $primary, $amount: 8%);
-}
-
-.btn-primary:active {
-    @include transs;
-    background-color: lighten($color: $primary, $amount: 16%);
-}
-
-// #endregion Controls
+// #endregion control
 
 // #region Table
 
@@ -231,27 +254,18 @@ $table-padding: 8px;
     @include col;
 }
 
-
-$gap-tween-component: 48px;
-
-.gap {
-    gap: 12px;
-}
-
-.gap-tween-component-down {
-    margin-bottom: $gap-tween-component;
-}
-
-.gap-tween-component-up {
-    margin-top: $gap-tween-component;
-}
+$gap-xs: 8px;
+$gap-s: 16px;
+$gap-m: 24px;
+$gap-l: 32px;
+$gap-xl: 48px;
 
 .page-padding {
     padding: 20px 0;
 }
 
 .page-gap {
-    gap: 24px;
+    gap: $gap-l;
 }
 
 // -------------------- Implementations -------------------- //

@@ -69,20 +69,16 @@
     @include colr;
 }
 
-@mixin trans($seconds: 0.2s) {
+@mixin trans($seconds: 0.15s) {
     transition: all ease $seconds;
 }
 
-@mixin transl() {
-    @include trans(0.32s);
-}
-
 @mixin transs {
-    @include trans(0.12s);
+    @include trans(0.05s);
 }
 
 @mixin circle() {
-    border-radius: 5000px;
+    border-radius: 99999px;
 }
 
 .circle {

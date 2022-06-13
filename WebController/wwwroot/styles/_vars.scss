@@ -35,9 +35,10 @@ $toolbar-border: 2px solid $toolbar-border-color;
 
 $border-color: #5a5a5a;
 $border: 1px solid $border-color;
+$border-radius: 4px;
 
 @mixin border-def-radius {
-    border-radius: 4px;
+    border-radius: $border-radius;
 }
 
 @mixin circle {
@@ -116,3 +117,5 @@ $dropdown-background: #2a2a2a;
     @include border-def-radius;
     padding: $card-padding;
 }
+
+$panel-padding: 16px;
