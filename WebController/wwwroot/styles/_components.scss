@@ -228,6 +228,7 @@ $table-padding: 8px;
 .layout-content {
     margin-top: $toolbar-height;
     min-height: calc(100vh - #{$toolbar-height});
+    @include col;
 }
 
 

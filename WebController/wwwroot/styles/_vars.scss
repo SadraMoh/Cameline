@@ -1,7 +1,8 @@
 // -------------------- Sizes -------------------- //
 
-$toolbar-height: calc(16px + 1.4em);
-$header-z-index: 1000;
+$toolbar-height: calc(16px + 1.0em);
+
+$toolbar-z-index: 1000;
 
 $footer-height: 0;
 
@@ -25,6 +26,10 @@ $text-1: #FCFCFC;
 $text-2: #CBCBCB;
 $text-3: #A2A2A0;
 $text-4: #70706D;
+
+$toolbar-material: #404548;
+$toolbar-border-color: lighten($toolbar-material, 4%);
+$toolbar-border: 2px solid $toolbar-border-color;
 
 // -------------------- Border -------------------- //
 

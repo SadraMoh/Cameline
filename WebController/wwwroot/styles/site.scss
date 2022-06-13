@@ -110,9 +110,10 @@ button {
 
 .toolbar {
     $menu-width: 210px;
+    z-index: $toolbar-z-index;
 
     @include row;
-    background-color: $material-1;
+    background-color: $toolbar-material;
     color: $text-1;
     font-size: 1em;
     position: fixed;
@@ -144,7 +145,7 @@ button {
             display: none;
             position: absolute;
             //
-            background-color: $material-2;
+            background-color: $toolbar-material;
             height: auto;
             min-width: $menu-width;
         }
@@ -159,7 +160,7 @@ button {
         }
 
         .toolbar-link:hover {
-            background-color: lighten($material-1, 8%);
+            background-color: lighten($toolbar-material, 8%);
         }
 
         .toolbar-link + toolbar-item-content::before {
@@ -186,9 +187,11 @@ button {
         }
 
         .toolbar-item-content {
-            top: 100%;
-            left: 0;
-            padding: 8px 0;
+            top: calc(100%);
+            left: 0px;
+            padding: 0px 0;
+            border: $border;
+            @include shadow-xlg;
         }
     }
 
@@ -222,4 +225,36 @@ button {
     }
 }
 
-/* --- {Book} --- */
+/* --- {Drive} --- */
+$default-panel-width: 256px;
+
+.drive {
+    --info-width: #{$default-panel-width};
+    --properties-width: #{$default-panel-width};
+    //-----------//
+    display: grid;
+    grid-template-columns: var(--info-width, #{$default-panel-width}) auto var(--properties-width, #{$default-panel-width});
+    grid-template-rows: 1fr;
+    background-color: $background;
+    flex: 1; // height: 100%;
+
+    .info {
+        background-color: $material-3;
+        border-right: $border;
+
+        .bookinfo {
+        }
+
+        .pages {
+        }
+    }
+
+
+    .workbench {
+    }
+
+    .properties {
+        background-color: $material-3;
+        border-left: $border;
+    }
+}

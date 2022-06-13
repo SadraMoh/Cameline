@@ -309,8 +309,14 @@ a:active img,
 }
 
 .layout-content {
-  margin-top: calc(16px + 1.4em);
-  min-height: calc(100vh - calc(16px + 1.4em));
+  margin-top: calc(16px + 1em);
+  min-height: calc(100vh - calc(16px + 1em));
+  display: flex;
+  flex-direction: column;
+  align-content: normal;
+  justify-content: normal;
+  align-items: normal;
+  flex-wrap: nowrap;
 }
 
 .gap {
@@ -469,18 +475,19 @@ button {
 
 /* --- {Toolbar} --- */
 .toolbar {
+  z-index: 1000;
   display: flex;
   flex-direction: row;
   align-content: normal;
   justify-content: normal;
   align-items: normal;
   flex-wrap: nowrap;
-  background-color: #373737;
+  background-color: #404548;
   color: #FCFCFC;
   font-size: 1em;
   position: fixed;
   width: 100%;
-  height: calc(16px + 1.4em);
+  height: calc(16px + 1em);
 }
 .toolbar .toolbar-nav {
   display: flex;
@@ -519,7 +526,7 @@ button {
   flex-wrap: nowrap;
   display: none;
   position: absolute;
-  background-color: #323232;
+  background-color: #404548;
   height: auto;
   min-width: 210px;
 }
@@ -536,7 +543,7 @@ button {
   padding: 8px 12px;
 }
 .toolbar .toolbar-nav .toolbar-link:hover {
-  background-color: #4b4b4b;
+  background-color: #535a5e;
 }
 .toolbar .toolbar-nav .toolbar-link + toolbar-item-content::before {
   content: ">";
@@ -551,14 +558,16 @@ button {
   margin: 6px 0;
 }
 .toolbar .toolbar-nav > .toolbar-item .toolbar-link {
-  height: calc(16px + 1.4em);
+  height: calc(16px + 1em);
   padding-top: unset;
   padding-bottom: unset;
 }
 .toolbar .toolbar-nav > .toolbar-item .toolbar-item-content {
   top: 100%;
-  left: 0;
-  padding: 8px 0;
+  left: 0px;
+  padding: 0px 0;
+  border: 1px solid #5a5a5a;
+  box-shadow: 0px 8px 24px 0px rgba(0, 0, 0, 0.36);
 }
 .toolbar .toolbar-nav > .toolbar-item:hover > .toolbar-item-content {
   display: flex;
@@ -576,6 +585,23 @@ button {
   display: flex;
 }
 
-/* --- {Book} --- */
+/* --- {Drive} --- */
+.drive {
+  --info-width: 256px;
+  --properties-width: 256px;
+  display: grid;
+  grid-template-columns: var(--info-width, 256px) auto var(--properties-width, 256px);
+  grid-template-rows: 1fr;
+  background-color: #141414;
+  flex: 1;
+}
+.drive .info {
+  background-color: #272727;
+  border-right: 1px solid #5a5a5a;
+}
+.drive .properties {
+  background-color: #272727;
+  border-left: 1px solid #5a5a5a;
+}
 
 /*# sourceMappingURL=site.css.map */
