@@ -484,6 +484,10 @@ button {
   font-size: 1em;
 }
 
+.hidden {
+  display: none;
+}
+
 /* --- {Toolbar} --- */
 .toolbar {
   z-index: 1000;
@@ -654,9 +658,52 @@ button {
   border-bottom: 1px solid #5a5a5a;
   padding: 16px;
 }
+.drive .workbenches {
+  display: flex;
+  -webkit-align-items: center;
+  align-items: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+}
+.drive .workbenches .panel {
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+  align-content: normal;
+  justify-content: normal;
+  align-items: normal;
+  flex-wrap: nowrap;
+  gap: 8px;
+}
 .drive .properties {
   background-color: #272727;
   border-left: 1px solid #5a5a5a;
+}
+
+.workbench {
+  display: flex;
+  flex-direction: column;
+  align-content: normal;
+  justify-content: normal;
+  align-items: normal;
+  flex-wrap: nowrap;
+  box-shadow: 0px 6px 18px 0px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+.workbench .bar {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.24);
+  opacity: 0;
+  transition: all ease 0.15s;
+}
+.workbench .panel {
+  background-color: #272727;
+}
+
+.workbench:hover .bar {
+  opacity: 1;
+  transition: all ease 0.05s;
 }
 
 /*# sourceMappingURL=site.css.map */

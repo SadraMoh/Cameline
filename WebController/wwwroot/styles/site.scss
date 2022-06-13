@@ -109,6 +109,10 @@ button {
     font-size: 1em;
 }
 
+.hidden {
+    display: none;
+}
+
 /* --- {Toolbar} --- */
 
 .toolbar {
@@ -281,11 +285,52 @@ $default-panel-width: 324px;
     }
 
 
-    .workbench {
+    .workbenches {
+        display: flex;
+        -webkit-align-items: center;
+        align-items: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+
+        .panel {
+            margin: auto;
+            @include row;
+            gap: $gap-xs;
+        }
     }
 
     .properties {
         background-color: $material-3;
         border-left: $border;
+    }
+}
+
+.workbench {
+    @include col;
+    @include shadow-lg;
+    position: relative;
+
+    .bar {
+        position: absolute;
+        bottom: calc(100% + #{$gap-xs});
+        @include shadow-m;
+        opacity: 0;
+        @include trans;
+    }
+
+    .panel {
+        background-color: $material-3;
+    }
+}
+
+.workbench:hover {
+    .bar {
+        opacity: 1;
+        @include transs;
+    }
+
+    .panel {
+        video {
+        }
     }
 }

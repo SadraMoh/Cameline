@@ -1,5 +1,61 @@
 ﻿
-<h3>WorkbenchDouble</h3>
+<div class="workbench">
+
+    <div class="bar fh">
+        <button class="control">
+            <span class="material-symbols-sharp">crop</span>
+        </button>
+        <drop class="hidden" [parent]="btnCrop" [direction]="'br'" mode="hover">
+            <div class="col">
+                <label>X: {{ 0 }}</label>
+                <label>Y: {{ 0 }}</label>
+                <label>Width: {{ cropperWidth }}</label>
+                <label>Height: {{ cropperHeight }}</label>
+            </div>
+        </drop>
+
+        <button class="control">
+            <span class="material-symbols-sharp">autorenew</span>
+        </button>
+        <drop class="hidden" [parent]="btnRotate" [direction]="'br'" mode="hover">
+            <dial [size]="100" [min]="0" [max]="360" label="Rotation" (valueChange)="optionsChanged()" [(value)]="rotation"></dial>
+        </drop>
+
+        <drop class="hidden" [parent]="btnZoom" direction="br" mode="hover">
+            <range [(value)]="zoom" (valueChange)="optionsChanged()" [min]="0" [max]="8" [step]="1" icon="search"></range>
+        </drop>
+        <button class="control">
+            <span class="material-symbols-sharp">search</span>
+        </button>
+
+
+    </div>
+
+    <div class="panel">
+        <div class="cropper" draggable="false">
+            <div class="cropper-info" (mousedown)="centerDown()" style="cursor: move;">
+                <span>{{ cropperWidth }} X {{ cropperHeight }}</span>
+            </div>
+            <div class="handlebars-grid">
+                <div class="corner" style="top: -5px; left: -5px; cursor: nw-resize;" (mousedown)="tlDown()"></div>
+                <div class="handlebar" style="left: -5px; right: -5px; top: -5px; cursor: n-resize;" (mousedown)="topDown()">
+                </div>
+                <div class="corner" style="top: -5px; right: -5px; cursor: ne-resize;" (mousedown)="trDown()"></div>
+                <div class="handlebar" style="top: -5px; bottom: -5px; right: -5px; cursor: e-resize;"
+                     (mousedown)="rightDown()"></div>
+                <div class="center" (mousedown)="centerDown()"></div>
+                <div class="handlebar" style="left: -5px; right: -5px; bottom: -5px; cursor: s-resize;"
+                     (mousedown)="bottomDown()"></div>
+                <div class="corner" style="bottom: -5px; right: -5px; cursor: se-resize" (mousedown)="brDown()"></div>
+                <div class="handlebar" style="top: -5px; bottom: -5px; left: -5px; cursor: w-resize;" (mousedown)="leftDown()">
+                </div>
+                <div class="corner" style="bottom: -5px; left: -5px; cursor: sw-resize" (mousedown)="blDown()"></div>
+            </div>
+        </div>
+        <video></video>
+    </div>
+
+</div>
 
 @code {
 
