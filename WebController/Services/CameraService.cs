@@ -19,9 +19,13 @@ namespace WebController.Services
 
         private bool isInit = false;
 
+<<<<<<< HEAD
         public Stream? LiveImageStream;
 
         public static readonly string LIVE_KEY = "live";
+=======
+        const int TIMEOUTMILISECONDS = 5000;
+>>>>>>> 171391990d8ed33edc6922f11ba178e04fd0095c
 
         public CameraService(AlertService alertSv)
         {
@@ -161,30 +165,47 @@ namespace WebController.Services
 
         #endregion
 
+<<<<<<< HEAD
         const int LiveViewWaitTime = 500;
 
+=======
+>>>>>>> 171391990d8ed33edc6922f11ba178e04fd0095c
         public async Task LiveView_Start(Camera cam)
         {
             if (cam.IsLiveViewOn) return;
 
+            var promise = new TaskCompletionSource();
+
+            LiveViewUpdate stopWaiting = (Camera sender, Stream img) => promise.SetResult();
+
             cam.StartLiveView();
+            cam.LiveViewUpdated += stopWaiting;
+
+            await promise.Task.WaitAsync(TimeSpan.FromMilliseconds(TIMEOUTMILISECONDS));
+
+            cam.LiveViewUpdated -= stopWaiting;
             cam.LiveViewStopped += Camera_LiveViewStopped;
 
             alertSv.Notify("LiveView started", cam.DeviceName);
-
-            await Task.Delay(LiveViewWaitTime);
         }
 
         public async Task LiveView_Stop(Camera cam)
         {
             if (!cam.IsLiveViewOn) return;
 
+            var promise = new TaskCompletionSource();
+
+            CameraUpdateHandler stopWaiting = (Camera sender) => promise.SetResult();
+
             cam.StopLiveView();
+            cam.LiveViewStopped += stopWaiting;
+
+            await promise.Task.WaitAsync(TimeSpan.FromMilliseconds(TIMEOUTMILISECONDS));
+
+            cam.LiveViewStopped -= stopWaiting;
             cam.LiveViewStopped -= Camera_LiveViewStopped;
 
             alertSv.Notify("LiveView stopped", cam.DeviceName);
-
-            await Task.Delay(LiveViewWaitTime);
         }
 
     }

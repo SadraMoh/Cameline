@@ -1,0 +1,316 @@
+@import "vars";
+@import "utility";
+
+//-
+//- Components
+
+// anchor tags
+a,
+.link {
+    color: lighten($color: $secondary, $amount: 2%);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+a:hover,
+.link:hover {
+    color: lighten($color: $secondary, $amount: 10%);
+
+    img {
+        filter: brightness(110%);
+    }
+}
+
+a:active,
+.link:active {
+    color: lighten($color: $primary, $amount: 20%);
+    text-shadow: 0 0 0;
+
+    img {
+        filter: brightness(120%);
+    }
+}
+
+.entry-invis {
+    background-color: transparent;
+    border: 0;
+    font-size: 1em;
+    padding: 6px 8px;
+    color: $text-1;
+}
+
+// -------------------- Forms -------------------- //
+
+.textbox {
+    background-color: transparent;
+    padding: 8px 16px;
+    flex: auto;
+    font-size: 1em;
+    @include border-def-radius;
+    border: #4D4D4D 1px solid;
+    background-color: #2a2a2a;
+}
+
+// #region control
+
+$control-background: #2A2A2A;
+$control-border-color: #4D4D4D;
+$control-border: 1px solid $border-color;
+
+$control-height: 36px;
+
+.control {
+    background-color: $control-background;
+    border: $border;
+    border-radius: $border-radius;
+    color: $text-1;
+    display: flex !important;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    //-
+    @include border-def-radius;
+}
+
+$control-button-background: #373737;
+
+button.control, .material-symbols-sharp.control {
+    background-color: $control-button-background;
+    height: $control-height;
+    width: $control-height;
+    @include trans;
+}
+
+button.control:hover {
+    background-color: lighten($control-button-background, 12%);
+    @include transs;
+    transition-property: background-color;
+}
+
+input[type=text].control,
+textarea.control {
+    resize: vertical;
+    @include placeholder($text-4);
+    height: $control-height;
+    min-height: $control-height;
+    padding: 0 8px;
+    color: $text-2;
+    font-size: 1.2em;
+}
+
+input[type=text].control:disabled,
+input[type=text].control:read-only,
+textarea.control:disabled,
+textarea.control:read-only {
+    background-color: lighten($control-background, 12%);
+    color: $text-3;
+    cursor: text;
+}
+
+.fg {
+}
+
+.fh {
+    @include row;
+
+    > .control {
+        border-radius: 0;
+    }
+
+    .control:not(:first-child) {
+        border-left: none;
+    }
+
+    > .control:first-child {
+        border-top-left-radius: $border-radius;
+        border-bottom-left-radius: $border-radius;
+    }
+
+    > .control:last-child {
+        border-top-right-radius: $border-radius;
+        border-bottom-right-radius: $border-radius;
+    }
+
+    input[type=text].control {
+        flex: 1;
+    }
+}
+
+// #endregion control
+
+// #region Table
+
+$table-padding: 8px;
+
+.tbl {
+    border-spacing: 0;
+
+    thead {
+        tr {
+            background-color: $material-3;
+
+            th {
+                padding: $table-padding;
+                text-align: left;
+            }
+
+            th:first-child {
+                padding-left: 16px;
+            }
+
+            th:last-child {
+                padding-right: 16px;
+            }
+        }
+    }
+
+    tbody {
+        tr {
+            background-color: $material-1;
+            @include trans(0.32s);
+
+            td {
+                padding: $table-padding;
+            }
+
+            td:first-child {
+                padding-left: 16px;
+            }
+
+            td:last-child {
+                padding-right: 16px;
+            }
+        }
+    }
+}
+
+.tbl.tbl-striped {
+    tbody {
+        tr:nth-child(2n - 1) {
+            background-color: $material-2;
+        }
+    }
+}
+
+.tbl.tbl-hover {
+    tbody {
+        tr:hover {
+            @include trans(0.16s);
+            background-color: lighten($color: $material-1, $amount: 6%);
+        }
+    }
+}
+
+.tbl.tbl-hover.tbl.tbl-striped {
+    tbody {
+        tr:nth-child(2n-1):hover {
+            background-color: lighten($color: $material-1, $amount: 6%);
+        }
+    }
+}
+
+.tbl.round {
+    overflow: hidden;
+    @include border-def-radius;
+}
+
+// #endregion Table
+
+/* width */
+::-webkit-scrollbar {
+    width: 16px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background-color: darken($background, 4%);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: lighten($color: $card-border-color, $amount: 8%);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: darken($color: $primary, $amount: 0%);
+}
+
+//- layout
+
+.container,
+.container-fluid {
+    width: 100%;
+}
+
+.page {
+    min-height: 100vh;
+}
+
+.layout-content {
+    margin-top: $toolbar-height;
+    min-height: calc(100vh - #{$toolbar-height});
+    @include col;
+}
+
+$gap-xs: 8px;
+$gap-s: 16px;
+$gap-m: 24px;
+$gap-l: 32px;
+$gap-xl: 48px;
+
+.page-padding {
+    padding: 20px 0;
+}
+
+.page-gap {
+    gap: $gap-l;
+}
+
+// -------------------- Implementations -------------------- //
+
+.card {
+    @include card;
+}
+
+.mat-1 {
+    background-color: $material-1;
+}
+
+.mat-2 {
+    background-color: $material-2;
+}
+
+.mat-3 {
+    background-color: $material-3;
+}
+
+.mat-4 {
+    background-color: $material-4;
+}
+
+.border-def-radius,
+.round {
+    @include border-def-radius;
+}
+
+.shadow-xs {
+    @include shadow-xs;
+}
+
+.shadow-s {
+    @include shadow-s;
+}
+
+.shadow-m {
+    @include shadow-m;
+}
+
+.shadow-lg {
+    @include shadow-lg;
+}
+
+.shadow-xlg {
+    @include shadow-xlg;
+}

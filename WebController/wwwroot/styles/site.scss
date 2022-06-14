@@ -1,0 +1,373 @@
+/* --- {Variables} --- */
+@import "vars";
+
+/* --- {Utility} --- */
+@import "utility";
+
+/* --- {Components} --- */
+@import "components";
+
+/* --- {site} --- */
+
+:root {
+    --break-1: #{$break-1};
+    --break-2: #{$break-2};
+    --break-3: #{$break-3};
+    --break-4: #{$break-4};
+    font-size: 14px;
+}
+
+/* Blazor Defaults */
+
+#blazor-error-ui {
+    display: none;
+}
+
+/* Reset */
+
+* {
+    padding: 0;
+    margin: 0;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    outline: none;
+    border: 0;
+    color: $text-1;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    background-color: $background;
+    overflow-x: hidden;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+ul {
+    list-style-type: none;
+}
+
+img {
+    object-fit: contain;
+    object-position: center;
+}
+
+p {
+    color: $text-2;
+    font-size: 1.25em;
+}
+
+@media only screen and (max-width: $break-2) {
+    html,
+    body {
+    }
+}
+
+@media only screen and (max-width: $break-3) {
+    html,
+    body {
+        font-size: 0.8em;
+    }
+}
+
+// #region custom scrollbar
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: $material-4;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: lighten($color: $material-3, $amount: 18%);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: lighten($color: $material-3, $amount: 28%);
+}
+
+// #endregion
+
+a {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+a:hover {
+    color: $primary-light;
+}
+
+button {
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.hidden {
+    display: none;
+}
+
+/* --- {Toolbar} --- */
+
+.toolbar {
+    $menu-width: 210px;
+    z-index: $toolbar-z-index;
+
+    @include row;
+    background-color: $toolbar-material;
+    color: $text-1;
+    font-size: 1em;
+    position: fixed;
+    width: 100%;
+    height: $toolbar-height;
+
+    .toolbar-nav {
+        @include row;
+        -webkit-align-items: stretch;
+        align-items: stretch;
+
+        .toolbar-link {
+            @include row;
+            -webkit-align-items: center;
+            align-items: center;
+            -ms-align-content: center;
+            -webkit-align-content: center;
+            align-content: center;
+            color: $text-1;
+
+            .material-symbols-sharp {
+                margin-right: .25em;
+                font-size: 18px;
+            }
+        }
+
+        .toolbar-item-content {
+            @include col;
+            display: none;
+            position: absolute;
+            //
+            background-color: $toolbar-material;
+            height: auto;
+            min-width: $menu-width;
+        }
+
+        .toolbar-item {
+            position: relative;
+            @include col;
+        }
+
+        .toolbar-link {
+            padding: 8px 12px;
+            @include trans;
+        }
+
+        .toolbar-link:hover {
+            background-color: lighten($toolbar-material, 8%);
+            @include transs;
+            transition-property: background-color;
+        }
+
+        .toolbar-link + toolbar-item-content::before {
+            content: ">";
+            display: block;
+            width: 16px;
+            height: 16px;
+            color: red;
+        }
+
+        .seperator, hr {
+            width: 100%;
+            border-top: 1px solid #4a4a4a;
+            margin: 6px 0;
+        }
+    }
+    // toolbar-nav
+    .toolbar-nav > .toolbar-item {
+
+        .toolbar-link {
+            height: $toolbar-height;
+            padding-top: unset;
+            padding-bottom: unset;
+        }
+
+        .toolbar-item-content {
+            top: calc(100%);
+            left: 0px;
+            padding: 0px 0;
+            border: $border;
+            @include shadow-xlg;
+        }
+    }
+
+    .toolbar-nav > .toolbar-item:hover {
+
+        > .toolbar-item-content {
+            display: flex;
+        }
+    }
+    // toolbar-item-content
+
+    .toolbar-item-content .toolbar-item {
+
+        .toolbar-item-content {
+            top: 0;
+            left: 100%;
+        }
+
+        .toolbar-link:not(:last-child):after {
+            content: ">";
+            display: block;
+            margin-left: auto;
+        }
+    }
+
+    .toolbar-item-content > .toolbar-item:hover {
+
+        > .toolbar-item-content {
+            display: flex;
+        }
+    }
+}
+
+/* --- {Drive} --- */
+$default-panel-width: 324px;
+
+.drive {
+    --info-width: #{$default-panel-width};
+    --properties-width: #{$default-panel-width};
+    //-----------//
+    display: grid;
+    grid-template-columns: var(--info-width, #{$default-panel-width}) auto var(--properties-width, #{$default-panel-width});
+    grid-template-rows: 1fr;
+    background-color: $background;
+    flex: 1; // height: 100%;
+
+    .info {
+        @include col;
+        border-right: $border;
+
+        .bookinfo {
+            padding: $panel-padding;
+            @include col;
+            gap: $gap-m;
+            background-color: $material-2;
+            border-bottom: $border;
+
+            .row {
+                -webkit-align-items: center;
+                align-items: center;
+            }
+
+            .title {
+                font-size: 1.65em;
+            }
+
+            .btn {
+                margin-left: auto;
+            }
+        }
+
+        .pages {
+            @include col;
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            background-color: $material-4;
+            border-bottom: $border;
+            padding: $panel-padding;
+        }
+    }
+
+
+    .workbenches {
+        display: flex;
+        -webkit-align-items: center;
+        align-items: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+
+        .panel {
+            margin: auto;
+            @include row;
+            gap: $gap-xs;
+        }
+    }
+
+    .properties {
+        background-color: $material-3;
+        border-left: $border;
+    }
+}
+
+.workbench {
+    @include col;
+    @include shadow-lg;
+    position: relative;
+
+    .bar {
+        position: absolute;
+        bottom: calc(100% + #{$gap-xs});
+        @include shadow-m;
+        opacity: 0;
+        @include trans;
+    }
+
+    .panel {
+        background-color: $material-3;
+    }
+}
+
+.workbench:hover {
+    .bar {
+        opacity: 1;
+        @include transs;
+    }
+
+    .panel {
+        video {
+        }
+    }
+}
+
+/* --- {drop} --- */
+
+.drop-parent, .pos-relative {
+    position: relative;
+}
+
+.drop-parent:hover {
+    drop {
+        display: block;
+    }
+}
+
+drop {
+    display: none;
+    position: absolute;
+}
+
+/* --- {cropper} --- */
+
+.cropper-container {
+    width: 100%;
+    height: 100%;
+    flex: 1;
+    overflow: hidden;
+    position: absolute;
+    z-index: 100;
+
+    .cropper {
+        $cropper-color: transparentize(rgb(190, 29, 118), 0.25);
+        width: 50px;
+        height: 50px;
+        background-color: transparentize($color: $cropper-color, $amount: 0.5);
+        border: 2px solid $cropper-color;
+        box-shadow: 0 0 0 9999px rgba(0,0,0,.25);
+    }
+}

@@ -1,0 +1,47 @@
+﻿@page "/drive"
+
+<div class="drive">
+
+    <div class="info">
+
+        <div class="bookinfo">
+            <div class="row">
+                <h1 class="title">Book Name</h1>
+                <button class="btn btn-primary control">
+                    <span class="material-symbols-sharp">settings</span>
+                </button>
+            </div>
+            <div class="fh">
+                <span class="material-symbols-sharp control ltr">
+                    format_textdirection_l_to_r
+                </span>
+                <input type="text" class="control" value="Can't touch this" />
+                <button class="control">
+                    <span class="material-symbols-sharp">
+                        open_in_new
+                    </span>
+                </button>
+            </div>
+        </div>
+
+        <div class="pages">
+            <PageList />
+        </div>
+
+    </div>
+
+    <div class="workbenches">
+        <div class="panel">
+            <Workbench />
+            <Workbench />
+        </div>
+    </div>
+
+    <div class="properties">
+    </div>
+
+</div>
+
+@code {
+
+}
