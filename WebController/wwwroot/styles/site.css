@@ -705,5 +705,35 @@ button {
   opacity: 1;
   transition: all ease 0.05s;
 }
+/* --- {drop} --- */
+.drop-parent, .pos-relative {
+  position: relative;
+}
+
+.drop-parent:hover drop {
+  display: block;
+}
+
+drop {
+  display: none;
+  position: absolute;
+}
+
+/* --- {cropper} --- */
+.cropper-container {
+  width: 100%;
+  height: 100%;
+  flex: 1;
+  overflow: hidden;
+  position: absolute;
+  z-index: 100;
+}
+.cropper-container .cropper {
+  width: 50px;
+  height: 50px;
+  background-color: rgba(190, 29, 118, 0.25);
+  border: 2px solid rgba(190, 29, 118, 0.75);
+  box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.25);
+}
 
 /*# sourceMappingURL=site.css.map */
