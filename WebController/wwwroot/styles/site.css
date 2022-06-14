@@ -407,6 +407,11 @@ textarea.control:read-only {
 /* Blazor Defaults */
 #blazor-error-ui {
   display: none;
+  background-color: #a20;
+  padding: 8px;
+}
+#blazor-error-ui a {
+  color: yellow;
 }
 
 /* Reset */
@@ -729,11 +734,53 @@ drop {
   z-index: 100;
 }
 .cropper-container .cropper {
-  width: 50px;
-  height: 50px;
-  background-color: rgba(190, 29, 118, 0.25);
+  position: relative;
+  min-width: 50px;
+  min-height: 50px;
   border: 2px solid rgba(190, 29, 118, 0.75);
-  box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.25);
+  background-color: rgba(190, 29, 118, 0.25);
+  resize: both;
+  z-index: 80;
+  display: flex;
+  flex-direction: column;
+  align-content: normal;
+  justify-content: normal;
+  align-items: normal;
+  flex-wrap: nowrap;
+}
+.cropper-container .cropper .cropper-info {
+  position: absolute;
+  background-color: rgba(190, 29, 118, 0.75);
+  font-size: 0.64em;
+  margin-right: auto;
+  color: #CBCBCB;
+  padding: 1px 4px;
+  user-select: none;
+  left: auto;
+  right: auto;
+  bottom: auto;
+  top: auto;
+}
+.cropper-container .cropper .corner {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  z-index: 10;
+}
+.cropper-container .cropper .handlebar {
+  min-width: 10px;
+  min-height: 10px;
+  position: absolute;
+  z-index: 9;
+}
+.cropper-container .cropper .center {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  cursor: move;
+  background-color: transparent;
 }
 
 /*# sourceMappingURL=site.css.map */

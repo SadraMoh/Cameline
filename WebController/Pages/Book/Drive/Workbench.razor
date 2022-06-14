@@ -1,5 +1,4 @@
-﻿
-<div class="workbench">
+﻿<div class="workbench">
 
     <div class="bar fh">
         <button class="control">
@@ -37,23 +36,23 @@
     <div class="panel pos-relative">
         <div class="cropper-container">
             <div class="cropper">
-                <div class="cropper-info" (mousedown)="centerDown()" style="cursor: move;">
+                <div class="cropper-info" onmousedown="cropper(this, 'centerDown')" style="cursor: move;">
                     <span>{{ cropperWidth }} X {{ cropperHeight }}</span>
                 </div>
                 <div class="handlebars-grid">
-                    <div class="corner" style="top: -5px; left: -5px; cursor: nw-resize;" mousedown="tlDown()"></div>
-                    <div class="handlebar" style="left: -5px; right: -5px; top: -5px; cursor: n-resize;" mousedown="topDown()">
+                    <div class="corner" style="top: -5px; left: -5px; cursor: nw-resize;" onmousedown="cropper(this, 'tlDown')'"></div>
+                    <div class="handlebar" style="left: -5px; right: -5px; top: -5px; cursor: n-resize;" onmousedown="cropper(this, 'topDown')">
                     </div>
-                    <div class="corner" style="top: -5px; right: -5px; cursor: ne-resize;" mousedown="trDown()"></div>
+                    <div class="corner" style="top: -5px; right: -5px; cursor: ne-resize;" onmousedown="cropper(this, 'trDown')"></div>
                     <div class="handlebar" style="top: -5px; bottom: -5px; right: -5px; cursor: e-resize;"
-                         mousedown="rightDown()"></div>
-                    <div class="center" mousedown="centerDown()"></div>
+                         onmousedown="cropper(this, 'rightDown')"></div>
+                    <div class="center" onmousedown="cropper(this, 'centerDown')"></div>
                     <div class="handlebar" style="left: -5px; right: -5px; bottom: -5px; cursor: s-resize;"
-                         mousedown="bottomDown()"></div>
-                    <div class="corner" style="bottom: -5px; right: -5px; cursor: se-resize" mousedown="brDown()"></div>
-                    <div class="handlebar" style="top: -5px; bottom: -5px; left: -5px; cursor: w-resize;" mousedown="leftDown()">
+                         onmousedown="cropper(this, 'bottomDown')"></div>
+                    <div class="corner" style="bottom: -5px; right: -5px; cursor: se-resize" onmousedown="cropper(this, 'brDown')"></div>
+                    <div class="handlebar" style="top: -5px; bottom: -5px; left: -5px; cursor: w-resize;" onmousedown="cropper(this, 'leftDown')">
                     </div>
-                    <div class="corner" style="bottom: -5px; left: -5px; cursor: sw-resize" mousedown="blDown()"></div>
+                    <div class="corner" style="bottom: -5px; left: -5px; cursor: sw-resize" onmousedown="cropper(this, 'blDown')"></div>
                 </div>
             </div>
         </div>

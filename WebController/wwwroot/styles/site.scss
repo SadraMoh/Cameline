@@ -21,6 +21,12 @@
 
 #blazor-error-ui {
     display: none;
+    background-color: #a20;
+    padding: 8px;
+
+    a {
+        color: yellow
+    }
 }
 
 /* Reset */
@@ -355,6 +361,9 @@ drop {
 /* --- {cropper} --- */
 
 .cropper-container {
+    $cropper-color: transparentize(rgb(190, 29, 118), 0.25);
+    $handlebar-thickness: 10px;
+
     width: 100%;
     height: 100%;
     flex: 1;
@@ -362,12 +371,56 @@ drop {
     position: absolute;
     z-index: 100;
 
+    $cropper-color: transparentize(rgb(190, 29, 118), 0.25);
+
     .cropper {
-        $cropper-color: transparentize(rgb(190, 29, 118), 0.25);
-        width: 50px;
-        height: 50px;
-        background-color: transparentize($color: $cropper-color, $amount: 0.5);
+        position: relative;
+        min-width: 50px;
+        min-height: 50px;
         border: 2px solid $cropper-color;
-        box-shadow: 0 0 0 9999px rgba(0,0,0,.25);
+        background-color: transparentize($color: $cropper-color, $amount: 0.5);
+        resize: both;
+        z-index: 80;
+        @include col;
+
+        .cropper-info {
+            position: absolute;
+            background-color: $cropper-color;
+            font-size: 0.64em;
+            margin-right: auto;
+            color: $text-2;
+            padding: 1px 4px;
+            user-select: none;
+            left: auto;
+            right: auto;
+            bottom: auto;
+            top: auto;
+        }
+
+        $handlebar-thickness: 10px;
+
+        .corner {
+            width: $handlebar-thickness * 2;
+            height: $handlebar-thickness * 2;
+            position: absolute;
+            z-index: 10;
+        }
+
+        .handlebar {
+            min-width: $handlebar-thickness;
+            min-height: $handlebar-thickness;
+            position: absolute;
+            z-index: 9;
+        }
+
+        .center {
+            position: absolute;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            cursor: move;
+            background-color: transparent;
+        }
     }
 }
