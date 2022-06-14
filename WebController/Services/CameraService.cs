@@ -19,13 +19,11 @@ namespace WebController.Services
 
         private bool isInit = false;
 
-<<<<<<< HEAD
         public Stream? LiveImageStream;
 
         public static readonly string LIVE_KEY = "live";
-=======
+
         const int TIMEOUTMILISECONDS = 5000;
->>>>>>> 171391990d8ed33edc6922f11ba178e04fd0095c
 
         public CameraService(AlertService alertSv)
         {
@@ -165,11 +163,6 @@ namespace WebController.Services
 
         #endregion
 
-<<<<<<< HEAD
-        const int LiveViewWaitTime = 500;
-
-=======
->>>>>>> 171391990d8ed33edc6922f11ba178e04fd0095c
         public async Task LiveView_Start(Camera cam)
         {
             if (cam.IsLiveViewOn) return;
