@@ -41,16 +41,6 @@ a:active,
 
 // -------------------- Forms -------------------- //
 
-.textbox {
-    background-color: transparent;
-    padding: 8px 16px;
-    flex: auto;
-    font-size: 1em;
-    @include border-def-radius;
-    border: #4D4D4D 1px solid;
-    background-color: #2a2a2a;
-}
-
 // #region control
 
 $control-background: #2A2A2A;
@@ -60,6 +50,7 @@ $control-border: 1px solid $border-color;
 $control-height: 36px;
 
 .control {
+    height: $control-height;
     background-color: $control-background;
     border: $border;
     border-radius: $border-radius;
@@ -88,58 +79,197 @@ button.control:hover {
     transition-property: background-color;
 }
 
-input[type=text].control,
-textarea.control {
-    resize: vertical;
-    @include placeholder($text-4);
-    height: $control-height;
-    min-height: $control-height;
-    padding: 0 8px;
+
+
+.invisibox {
+    background: transparent;
     color: $text-2;
-    font-size: 1.2em;
+    @include placeholder($text-4);
+    padding: 8px 10px;
+    font-size: 1em;
+    width: 100%;
 }
 
-input[type=text].control:disabled,
-input[type=text].control:read-only,
-textarea.control:disabled,
-textarea.control:read-only {
+.textbox,
+.textarea {
+}
+
+.range {
+    margin: 0 8px;
+    /* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+    &::-webkit-slider-thumb, &::-moz-range-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        cursor: pointer;
+        width: 18px;
+        height: 18px;
+        border: $border;
+        background-color: $material-3;
+        @include circle;
+        @include trans;
+    }
+    /* Mouse-over effects */
+    &:hover::-webkit-slider-thumb {
+        background-color: $material-1;
+    }
+}
+
+.textbox:disabled,
+.textbox:read-only,
+.textarea:disabled,
+.textarea:read-only {
     background-color: lighten($control-background, 12%);
     color: $text-3;
     cursor: text;
 }
 
+.checkbox {
+    @include row;
+    align-items: center;
+    justify-items: flex-start;
+
+    .text {
+        margin-left: 8px;
+        cursor: pointer;
+        color: $text-2;
+        @include trans;
+    }
+
+    input:focus + .text {
+        color: $text-1;
+    }
+
+    $checkbox-size: 22px;
+
+    input {
+        appearance: none;
+        width: $checkbox-size;
+        height: $checkbox-size;
+        background-color: transparent;
+        border-radius: 3px;
+        border: 2px solid $border-color;
+        @include trans;
+        cursor: pointer;
+    }
+
+    input:focus {
+        border-color: $primary;
+    }
+
+    input:checked {
+        border-color: $primary;
+        background-color: $primary;
+    }
+
+    input:checked::after {
+        content: "";
+        position: relative;
+        display: block;
+        width: 11px;
+        height: 5px;
+        margin-left: 2px;
+        margin-top: 3.2px;
+        transform: rotate(-45deg);
+        $cborder: 2.3pt solid $text-1;
+        border-left: $cborder;
+        border-bottom: $cborder;
+        @include trans;
+    }
+}
+
 .fg {
+    @include col;
+    margin-bottom: $gap-s;
+
+    > label:first-child,
+    .fg-label {
+        margin-bottom: $gap-xs;
+    }
 }
 
 .fh {
     @include row;
 
-    > .control {
+    .control {
         border-radius: 0;
     }
-
-    .control:not(:first-child) {
+    // remove left border for all elements except the first one
+    > *:not(:first-child) > .control,
+    > *:not(:first-child) > * > .control,
+    > .control:not(:first-child) {
         border-left: none;
     }
-
+    // round left element borders
+    > *:first-child > .control,
+    > *:first-child > * > .control,
     > .control:first-child {
         border-top-left-radius: $border-radius;
         border-bottom-left-radius: $border-radius;
     }
-
+    // round righ element borders
+    > *:last-child > .control,
+    > *:last-child > * > .control,
     > .control:last-child {
         border-top-right-radius: $border-radius;
         border-bottom-right-radius: $border-radius;
     }
+}
+// #endregion control
+// #region Table
 
-    input[type=text].control {
-        flex: 1;
+/* --- {drop} --- */
+
+$drop-offset: 8px;
+
+.pos-relative {
+    position: relative;
+}
+
+.drop-parent {
+    position: relative;
+}
+
+.drop-parent:hover {
+    drop[mode=hover] {
+        @include transs;
+        display: block;
     }
 }
 
-// #endregion control
+drop {
+    position: absolute;
+    z-index: 1000;
+    display: none;
+}
 
-// #region Table
+drop[direction=bottom] {
+    /*top: calc(100% + #{$drop-offset});*/
+    top: 100%;
+    left: 0;
+    border-top: solid transparent $drop-offset;
+}
+
+drop[direction=top] {
+    /*bottom: calc(100% + #{$drop-offset});*/
+    bottom: 100%;
+    left: 0;
+    border-bottom: solid transparent $drop-offset;
+}
+
+drop[direction=right] {
+    /*left: calc(100% + #{$drop-offset});*/
+    left: 100%;
+    top: 0;
+    border-left: solid transparent $drop-offset;
+}
+
+drop[direction=left] {
+    /*right: calc(100% + #{$drop-offset});*/
+    right: 100%;
+    top: 0;
+    border-right: solid transparent $drop-offset;
+}
+
 
 $table-padding: 8px;
 
@@ -214,29 +344,24 @@ $table-padding: 8px;
     overflow: hidden;
     @include border-def-radius;
 }
-
 // #endregion Table
 
 /* width */
 ::-webkit-scrollbar {
     width: 16px;
 }
-
 /* Track */
 ::-webkit-scrollbar-track {
     background-color: darken($background, 4%);
 }
-
 /* Handle */
 ::-webkit-scrollbar-thumb {
     background: lighten($color: $card-border-color, $amount: 8%);
 }
-
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
     background: darken($color: $primary, $amount: 0%);
 }
-
 //- layout
 
 .container,
@@ -253,12 +378,6 @@ $table-padding: 8px;
     min-height: calc(100vh - #{$toolbar-height});
     @include col;
 }
-
-$gap-xs: 8px;
-$gap-s: 16px;
-$gap-m: 24px;
-$gap-l: 32px;
-$gap-xl: 48px;
 
 .page-padding {
     padding: 20px 0;

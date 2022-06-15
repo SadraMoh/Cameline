@@ -1,66 +1,191 @@
 ﻿<div class="workbench">
 
     <div class="bar fh">
-        <button class="control">
-            <span class="material-symbols-sharp">crop</span>
-        </button>
-        <drop [parent]="btnCrop" [direction]="'br'" mode="hover">
-            <div class="col">
-                <label>X: {{ 0 }}</label>
-                <label>Y: {{ 0 }}</label>
-                <label>Width: {{ cropperWidth }}</label>
-                <label>Height: {{ cropperHeight }}</label>
-            </div>
-        </drop>
 
-        <button class="control">
-            <span class="material-symbols-sharp">autorenew</span>
-        </button>
-        <drop [parent]="btnRotate" [direction]="'br'" mode="hover">
-            <dial [size]="100" [min]="0" [max]="360" label="Rotation" (valueChange)="optionsChanged()" [(value)]="rotation"></dial>
-        </drop>
+        <div class="drop-parent">
+            <button class="control">
+                <span class="material-symbols-sharp">crop</span>
+            </button>
+            <drop mode="hover" direction="top">
+                <div class="card col">
+                    <div class="fg">
+                        <label>Offset X</label>
+                        <div class="fh">
+                            <div class="control">
+                                <input class="invisibox" style="width: 6ch" type="text" @bind="cropX" />
+                            </div>
+                            <div class="control">
+                                <input class="range" step="1" min="0" max="100" type="range" @bind="cropX" @bind:event="oninput" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fg">
+                        <label>Offset Y</label>
+                        <div class="fh">
+                            <div class="control">
+                                <input class="invisibox" style="width: 6ch" type="text" @bind="cropY" />
+                            </div>
+                            <div class="control">
+                                <input class="range" step="1" min="0" max="100" type="range" @bind="cropY" @bind:event="oninput" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fg">
+                        <label>Width</label>
+                        <div class="fh">
+                            <div class="control">
+                                <input class="invisibox" style="width: 6ch" type="text" @bind="cropWidth" />
+                            </div>
+                            <div class="control">
+                                <input class="range" step="1" min="10" max="100" type="range" @bind="cropWidth" @bind:event="oninput" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fg">
+                        <label>Height</label>
+                        <div class="fh">
+                            <div class="control">
+                                <input class="invisibox" style="width: 6ch" type="text" @bind="cropHeight" />
+                            </div>
+                            <div class="control">
+                                <input class="range" step="1" min="10" max="100" type="range" @bind="cropHeight" @bind:event="oninput" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </drop>
+        </div>
 
-        <button class="control">
-            <span class="material-symbols-sharp">search</span>
-        </button>
-        <drop [parent]="btnZoom" direction="br" mode="hover">
-            <range [(value)]="zoom" (valueChange)="optionsChanged()" [min]="0" [max]="8" [step]="1" icon="search"></range>
-        </drop>
+        <div class="drop-parent">
+            <button class="control">
+                <span class="material-symbols-sharp">autorenew</span>
+            </button>
+            <drop mode="hover" direction="top">
+                <div class="card col">
+                    <div class="fg">
+                        <label>Rotation</label>
+                        <div class="fh">
+                            <div class="control">
+                                <input class="invisibox" style="width: 6ch" type="text" @bind="cropRotation" />
+                            </div>
+                            <div class="control">
+                                <input class="range" step="1" min="0" max="180" type="range" @bind="cropRotation" @bind:event="oninput" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="fg">
+                        <label class="checkbox">
+                            <input type="checkbox" value="" @bind="cropFlip" />
+                            <span class="text">
+                                Flip
+                            </span>
+                        </label>
+                    </div>
+                </div>
+            </drop>
+        </div>
 
-        <button class="control">
-            <span class="material-symbols-sharp">photo_camera</span>
-        </button>
+        <div class="drop-parent">
+            <button class="control">
+                <span class="material-symbols-sharp">search</span>
+            </button>
+            <drop mode="hover" direction="top">
+                <range [(value)]="zoom" (valueChange)="optionsChanged()" [min]="0" [max]="8" [step]="1" icon="search"></range>
+            </drop>
+        </div>
+
+        <div class="drop-parent">
+            <button class="control">
+                <span class="material-symbols-sharp">photo_camera</span>
+            </button>
+            <drop mode="hover" direction="right">
+                <range [(value)]="zoom" (valueChange)="optionsChanged()" [min]="0" [max]="8" [step]="1" icon="search"></range>
+            </drop>
+        </div>
 
     </div>
 
     <div class="panel pos-relative">
         <div class="cropper-container">
-            <div class="cropper">
-                <div class="cropper-info" onmousedown="cropper(this, 'centerDown')" style="cursor: move;">
-                    <span>{{ cropperWidth }} X {{ cropperHeight }}</span>
+            <div class="cropper" style="width: @(cropWidth + "%"); height: @(cropHeight + "%"); left: @(cropX + "%"); top: @(cropY + "%"); transform: rotate(@(cropRotation + "deg"))">
+                <div class="cropper-info">
+                    <span>@(cropWidth)% : @(cropHeight)% .@(cropRotation)º</span>
                 </div>
-                <div class="handlebars-grid">
-                    <div class="corner" style="top: -5px; left: -5px; cursor: nw-resize;" onmousedown="cropper(this, 'tlDown')'"></div>
-                    <div class="handlebar" style="left: -5px; right: -5px; top: -5px; cursor: n-resize;" onmousedown="cropper(this, 'topDown')">
-                    </div>
-                    <div class="corner" style="top: -5px; right: -5px; cursor: ne-resize;" onmousedown="cropper(this, 'trDown')"></div>
-                    <div class="handlebar" style="top: -5px; bottom: -5px; right: -5px; cursor: e-resize;"
-                         onmousedown="cropper(this, 'rightDown')"></div>
-                    <div class="center" onmousedown="cropper(this, 'centerDown')"></div>
-                    <div class="handlebar" style="left: -5px; right: -5px; bottom: -5px; cursor: s-resize;"
-                         onmousedown="cropper(this, 'bottomDown')"></div>
-                    <div class="corner" style="bottom: -5px; right: -5px; cursor: se-resize" onmousedown="cropper(this, 'brDown')"></div>
-                    <div class="handlebar" style="top: -5px; bottom: -5px; left: -5px; cursor: w-resize;" onmousedown="cropper(this, 'leftDown')">
-                    </div>
-                    <div class="corner" style="bottom: -5px; left: -5px; cursor: sw-resize" onmousedown="cropper(this, 'blDown')"></div>
+                @*<div class="handlebars-grid">
+                <div class="corner" style="top: -5px; left: -5px; cursor: nw-resize;" onmousedown="cropper(this, 'tlDown')'"></div>
+                <div class="handlebar" style="left: -5px; right: -5px; top: -5px; cursor: n-resize;" onmousedown="cropper(this, 'topDown')">
                 </div>
+                <div class="corner" style="top: -5px; right: -5px; cursor: ne-resize;" onmousedown="cropper(this, 'trDown')"></div>
+                <div class="handlebar" style="top: -5px; bottom: -5px; right: -5px; cursor: e-resize;"
+                onmousedown="cropper(this, 'rightDown')"></div>
+                <div class="center" onmousedown="cropper(this, 'centerDown')"></div>
+                <div class="handlebar" style="left: -5px; right: -5px; bottom: -5px; cursor: s-resize;"
+                onmousedown="cropper(this, 'bottomDown')"></div>
+                <div class="corner" style="bottom: -5px; right: -5px; cursor: se-resize" onmousedown="cropper(this, 'brDown')"></div>
+                <div class="handlebar" style="top: -5px; bottom: -5px; left: -5px; cursor: w-resize;" onmousedown="cropper(this, 'leftDown')">
+                </div>
+                <div class="corner" style="bottom: -5px; left: -5px; cursor: sw-resize" onmousedown="cropper(this, 'blDown')"></div>
+                </div>*@
             </div>
         </div>
-        <video class="video"></video>
+        <video class="video" style="@(cropFlip ? "scaleX(-1)" : "")"></video>
     </div>
 
 </div>
 
 @code {
+
+    /// Percent
+    private float _cropWidth = 50f;
+    public float cropWidth
+    {
+        get => _cropWidth;
+        set
+        {
+            if (value + this.cropX > 100) value = 100 - this.cropX;
+            this._cropWidth = value;
+        }
+    }
+
+    /// Percent
+    private float _cropHeight = 50f;
+    public float cropHeight
+    {
+        get => _cropHeight;
+        set
+        {
+            if (value + this.cropY > 100) value = 100 - this.cropY;
+            this._cropHeight = value;
+        }
+    }
+
+    /// Degree
+    public float cropRotation { get; set; } = 0f;
+
+    public bool cropFlip { get; set; } = false;
+
+    /// Percent
+    private float _cropX = 25f;
+    public float cropX
+    {
+        get => _cropX;
+        set
+        {
+            if (this.cropWidth + value > 100) value = 100 - this.cropWidth;
+            this._cropX = value;
+        }
+    }
+
+    /// Percent
+    private float _cropY = 25f;
+    public float cropY
+    {
+        get => _cropY;
+        set
+        {
+            if (this.cropHeight + value > 100) value = 100 - this.cropHeight;
+            this._cropY = value;
+        }
+    }
 
 }

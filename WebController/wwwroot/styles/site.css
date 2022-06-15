@@ -159,17 +159,8 @@ a:active img,
   color: #FCFCFC;
 }
 
-.textbox {
-  background-color: transparent;
-  padding: 8px 16px;
-  flex: auto;
-  font-size: 1em;
-  border-radius: 4px;
-  border: #4D4D4D 1px solid;
-  background-color: #2a2a2a;
-}
-
 .control {
+  height: 36px;
   background-color: #2A2A2A;
   border: 1px solid #5a5a5a;
   border-radius: 4px;
@@ -195,34 +186,114 @@ button.control:hover {
   transition-property: background-color;
 }
 
-input[type=text].control,
-textarea.control {
-  resize: vertical;
-  height: 36px;
-  min-height: 36px;
-  padding: 0 8px;
+.invisibox {
+  background: transparent;
   color: #CBCBCB;
-  font-size: 1.2em;
+  padding: 8px 10px;
+  font-size: 1em;
+  width: 100%;
 }
-input[type=text].control ::placeholder,
-textarea.control ::placeholder {
+.invisibox ::placeholder {
   /* Chrome, Firefox, Opera, Safari 10.1+ */
   color: #70706D;
   opacity: 1; /* Firefox */
 }
-input[type=text].control :-ms-input-placeholder,
-textarea.control :-ms-input-placeholder {
+.invisibox :-ms-input-placeholder {
   /* Internet Explorer 10-11 */
   color: #70706D;
 }
 
-input[type=text].control:disabled,
-input[type=text].control:read-only,
-textarea.control:disabled,
-textarea.control:read-only {
+.range {
+  margin: 0 8px;
+  /* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+  /* Mouse-over effects */
+}
+.range::-webkit-slider-thumb, .range::-moz-range-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  width: 18px;
+  height: 18px;
+  border: 1px solid #5a5a5a;
+  background-color: #272727;
+  border-radius: 99999px;
+  transition: all ease 0.15s;
+}
+.range:hover::-webkit-slider-thumb {
+  background-color: #373737;
+}
+
+.textbox:disabled,
+.textbox:read-only,
+.textarea:disabled,
+.textarea:read-only {
   background-color: #494949;
   color: #A2A2A0;
   cursor: text;
+}
+
+.checkbox {
+  display: flex;
+  flex-direction: row;
+  align-content: normal;
+  justify-content: normal;
+  align-items: normal;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-items: flex-start;
+}
+.checkbox .text {
+  margin-left: 8px;
+  cursor: pointer;
+  color: #CBCBCB;
+  transition: all ease 0.15s;
+}
+.checkbox input:focus + .text {
+  color: #FCFCFC;
+}
+.checkbox input {
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  background-color: transparent;
+  border-radius: 3px;
+  border: 2px solid #5a5a5a;
+  transition: all ease 0.15s;
+  cursor: pointer;
+}
+.checkbox input:focus {
+  border-color: #1473E6;
+}
+.checkbox input:checked {
+  border-color: #1473E6;
+  background-color: #1473E6;
+}
+.checkbox input:checked::after {
+  content: "";
+  position: relative;
+  display: block;
+  width: 11px;
+  height: 5px;
+  margin-left: 2px;
+  margin-top: 3.2px;
+  transform: rotate(-45deg);
+  border-left: 2.3pt solid #FCFCFC;
+  border-bottom: 2.3pt solid #FCFCFC;
+  transition: all ease 0.15s;
+}
+
+.fg {
+  display: flex;
+  flex-direction: column;
+  align-content: normal;
+  justify-content: normal;
+  align-items: normal;
+  flex-wrap: nowrap;
+  margin-bottom: 12px;
+}
+.fg > label:first-child,
+.fg .fg-label {
+  margin-bottom: 8px;
 }
 
 .fh {
@@ -233,22 +304,73 @@ textarea.control:read-only {
   align-items: normal;
   flex-wrap: nowrap;
 }
-.fh > .control {
+.fh .control {
   border-radius: 0;
 }
-.fh .control:not(:first-child) {
+.fh > *:not(:first-child) > .control,
+.fh > *:not(:first-child) > * > .control,
+.fh > .control:not(:first-child) {
   border-left: none;
 }
+.fh > *:first-child > .control,
+.fh > *:first-child > * > .control,
 .fh > .control:first-child {
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px;
 }
+.fh > *:last-child > .control,
+.fh > *:last-child > * > .control,
 .fh > .control:last-child {
   border-top-right-radius: 4px;
   border-bottom-right-radius: 4px;
 }
-.fh input[type=text].control {
-  flex: 1;
+
+/* --- {drop} --- */
+.pos-relative {
+  position: relative;
+}
+
+.drop-parent {
+  position: relative;
+}
+
+.drop-parent:hover drop[mode=hover] {
+  transition: all ease 0.05s;
+  display: block;
+}
+
+drop {
+  position: absolute;
+  z-index: 1000;
+  display: none;
+}
+
+drop[direction=bottom] {
+  /*top: calc(100% + 8px);*/
+  top: 100%;
+  left: 0;
+  border-top: solid transparent 8px;
+}
+
+drop[direction=top] {
+  /*bottom: calc(100% + 8px);*/
+  bottom: 100%;
+  left: 0;
+  border-bottom: solid transparent 8px;
+}
+
+drop[direction=right] {
+  /*left: calc(100% + 8px);*/
+  left: 100%;
+  top: 0;
+  border-left: solid transparent 8px;
+}
+
+drop[direction=left] {
+  /*right: calc(100% + 8px);*/
+  right: 100%;
+  top: 0;
+  border-right: solid transparent 8px;
 }
 
 .tbl {
@@ -344,14 +466,14 @@ textarea.control:read-only {
 }
 
 .page-gap {
-  gap: 32px;
+  gap: 24px;
 }
 
 .card {
   background-color: #373737;
   box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.24);
   border-radius: 4px;
-  padding: 8px;
+  padding: 12px;
 }
 
 .mat-1 {
@@ -635,7 +757,7 @@ button {
   justify-content: normal;
   align-items: normal;
   flex-wrap: nowrap;
-  gap: 24px;
+  gap: 18px;
   background-color: #323232;
   border-bottom: 1px solid #5a5a5a;
 }
@@ -659,7 +781,7 @@ button {
   flex: 1;
   overflow-y: auto;
   overflow-x: hidden;
-  background-color: #212121;
+  background-color: #272727;
   border-bottom: 1px solid #5a5a5a;
   padding: 16px;
 }
@@ -710,20 +832,6 @@ button {
   opacity: 1;
   transition: all ease 0.05s;
 }
-/* --- {drop} --- */
-.drop-parent, .pos-relative {
-  position: relative;
-}
-
-.drop-parent:hover drop {
-  display: block;
-}
-
-drop {
-  display: none;
-  position: absolute;
-}
-
 /* --- {cropper} --- */
 .cropper-container {
   width: 100%;
@@ -735,10 +843,8 @@ drop {
 }
 .cropper-container .cropper {
   position: relative;
-  min-width: 50px;
-  min-height: 50px;
   border: 2px solid rgba(190, 29, 118, 0.75);
-  background-color: rgba(190, 29, 118, 0.25);
+  /*background-color: transparentize($color: $cropper-color, $amount: 0.5);*/
   resize: both;
   z-index: 80;
   display: flex;
@@ -747,19 +853,23 @@ drop {
   justify-content: normal;
   align-items: normal;
   flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.25);
+  transform-origin: center;
 }
 .cropper-container .cropper .cropper-info {
-  position: absolute;
-  background-color: rgba(190, 29, 118, 0.75);
-  font-size: 0.64em;
-  margin-right: auto;
+  font-size: 0.8em;
   color: #CBCBCB;
   padding: 1px 4px;
   user-select: none;
-  left: auto;
-  right: auto;
-  bottom: auto;
-  top: auto;
+  text-align: center;
+  opacity: 0;
+  transition: all ease 0.15s;
+}
+.cropper-container .cropper:hover .cropper-info {
+  opacity: 1;
+  transition: all ease 0.05s;
 }
 .cropper-container .cropper .corner {
   width: 20px;

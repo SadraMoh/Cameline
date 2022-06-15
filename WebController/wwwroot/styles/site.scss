@@ -284,7 +284,7 @@ $default-panel-width: 324px;
             flex: 1;
             overflow-y: auto;
             overflow-x: hidden;
-            background-color: $material-4;
+            background-color: $material-3;
             border-bottom: $border;
             padding: $panel-padding;
         }
@@ -341,23 +341,6 @@ $default-panel-width: 324px;
     }
 }
 
-/* --- {drop} --- */
-
-.drop-parent, .pos-relative {
-    position: relative;
-}
-
-.drop-parent:hover {
-    drop {
-        display: block;
-    }
-}
-
-drop {
-    display: none;
-    position: absolute;
-}
-
 /* --- {cropper} --- */
 
 .cropper-container {
@@ -375,26 +358,29 @@ drop {
 
     .cropper {
         position: relative;
-        min-width: 50px;
-        min-height: 50px;
         border: 2px solid $cropper-color;
-        background-color: transparentize($color: $cropper-color, $amount: 0.5);
+        /*background-color: transparentize($color: $cropper-color, $amount: 0.5);*/
         resize: both;
         z-index: 80;
         @include col;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 0 0 9999px rgba(0,0,0,0.25);
+        transform-origin: center;
 
         .cropper-info {
-            position: absolute;
-            background-color: $cropper-color;
-            font-size: 0.64em;
-            margin-right: auto;
+            font-size: 0.8em;
             color: $text-2;
             padding: 1px 4px;
             user-select: none;
-            left: auto;
-            right: auto;
-            bottom: auto;
-            top: auto;
+            text-align: center;
+            opacity: 0;
+            @include trans;
+        }
+
+        &:hover .cropper-info {
+            opacity: 1;
+            @include transs;
         }
 
         $handlebar-thickness: 10px;
