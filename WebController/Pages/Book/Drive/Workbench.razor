@@ -90,7 +90,19 @@
                 <span class="material-symbols-sharp">search</span>
             </button>
             <drop mode="hover" direction="top">
-                <range [(value)]="zoom" (valueChange)="optionsChanged()" [min]="0" [max]="8" [step]="1" icon="search"></range>
+                <div class="card col">
+                    <div class="fg">
+                        <label>Zoom</label>
+                        <div class="fh">
+                            <button class="control">
+                                <span class="material-symbols-sharp">zoom_in</span>
+                            </button>
+                            <button class="control">
+                                <span class="material-symbols-sharp">zoom_out</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </drop>
         </div>
 
@@ -98,8 +110,17 @@
             <button class="control">
                 <span class="material-symbols-sharp">photo_camera</span>
             </button>
-            <drop mode="hover" direction="right">
-                <range [(value)]="zoom" (valueChange)="optionsChanged()" [min]="0" [max]="8" [step]="1" icon="search"></range>
+            <drop mode="hover" direction="top">
+                <div class="card col">
+                    <div class="fg">
+                        <label>Camera</label>
+                        <select>
+                            <option>CANON EOS 2000x </option>
+                            <option>CANON EOS 1000x </option>
+                            <option>CANON EOS Kiss </option>
+                        </select>
+                    </div>
+                </div>
             </drop>
         </div>
 
