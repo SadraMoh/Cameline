@@ -1,4 +1,6 @@
-﻿<div class="workbench">
+﻿@inject CameraService camSv
+
+<div class="workbench">
 
     <div class="bar fh">
 
@@ -66,10 +68,10 @@
                         <label>Rotation</label>
                         <div class="fh">
                             <div class="control">
-                                <input class="invisibox" style="width: 6ch" type="text" @bind="cropRotation" />
+                                <input class="invisibox" style="width: 7ch" type="text" @bind="cropRotation" />
                             </div>
                             <div class="control">
-                                <input class="range" step="1" min="0" max="180" type="range" @bind="cropRotation" @bind:event="oninput" />
+                                <input class="range" step="0.2" min="-45" max="45" type="range" @bind="cropRotation" @bind:event="oninput" />
                             </div>
                         </div>
                     </div>
@@ -110,16 +112,84 @@
             <button class="control">
                 <span class="material-symbols-sharp">photo_camera</span>
             </button>
-            <drop mode="hover" direction="top">
-                <div class="card col">
+            <drop mode="hover" direction="right">
+                <div class="card col" style="min-width: 300px">
                     <div class="fg">
                         <label>Camera</label>
-                        <select>
-                            <option>CANON EOS 2000x </option>
-                            <option>CANON EOS 1000x </option>
-                            <option>CANON EOS Kiss </option>
-                        </select>
+                        <div class="fh">
+                            <select class="control combo" @onchange="on_selectedCamChange">
+                                @foreach (var cam in camSv.Cameras)
+                                {
+                                    <option selected="@(Cam?.ID == cam.ID)" value="@cam.ID">@cam.DeviceName</option>
+                                }
+                            </select>
+                        </div>
                     </div>
+                    @if (Cam != null)
+                    {
+                        <hr />
+                        <div class="row gap-m">
+                            <div class="fg flex-1">
+                                <label>Av</label>
+                                <div class="fh">
+                                    <select class="control combo" @onchange="on_avChange">
+                                        @foreach (var av in AvList)
+                                        {
+                                            <option selected="@(CamAv == av.IntValue)" value="@av.IntValue">@av.StringValue</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="fg flex-1">
+                                <label>Tv</label>
+                                <div class="fh">
+                                    <select class="control combo" @onchange="on_tvChange">
+                                        @foreach (var tv in TvList)
+                                        {
+                                            <option value="@(tv.IntValue)">@tv.StringValue</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row gap-m">
+                            <div class="fg flex-1">
+                                <label>ISO</label>
+                                <div class="fh">
+                                    <select class="control combo" @onchange="on_isoChange">
+                                        @foreach (var iso in ISOList)
+                                        {
+                                            <option value="@(iso.IntValue)">@iso.StringValue</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="flex-1"></div>
+                        </div>
+                        <hr />
+                        <div class="fg">
+                            <label class="checkbox">
+                                <input type="checkbox" value="" @bind="UseBulb" />
+                                <span class="text">
+                                    Bulb mode
+                                </span>
+                            </label>
+                        </div>
+                    }
+                    @if (UseBulb)
+                    {
+                        <div class="fg flex-1">
+                            <label>Bulb</label>
+                            <div class="fh">
+                                <div class="control">
+                                    <input class="invisibox" disabled="@(!UseBulb)" style="width: 9ch" type="text" @bind="Bulb" />
+                                </div>
+                                <div class="control flex-1">
+                                    <input class="range" disabled="@(!UseBulb)" step="1" min="0" max="100000" type="range" @bind="Bulb" @bind:event="oninput" />
+                                </div>
+                            </div>
+                        </div>
+                    }
                 </div>
             </drop>
         </div>
@@ -155,6 +225,53 @@
 </div>
 
 @code {
+
+    /// <summary>
+    /// Selected Camera
+    /// </summary>
+    public Camera? Cam { get; set; }
+
+    public CameraValue[] AvList
+    {
+        get => Cam?.GetSettingsList(PropertyID.Av) ?? new CameraValue[0];
+    }
+
+    public CameraValue[] TvList
+    {
+        get => Cam?.GetSettingsList(PropertyID.Tv) ?? new CameraValue[0];
+    }
+
+    public CameraValue[] ISOList
+    {
+        get => Cam?.GetSettingsList(PropertyID.ISO) ?? new CameraValue[0];
+    }
+
+    public int? CamAv
+    {
+        get
+        {
+            if (Cam == null) return null;
+            return AvValues.GetValue(Cam.GetInt32Setting(PropertyID.Av)).IntValue;
+        }
+    }
+
+    public int? CamTv
+    {
+        get
+        {
+            if (Cam == null) return null;
+            return AvValues.GetValue(Cam.GetInt32Setting(PropertyID.Tv)).IntValue;
+        }
+    }
+
+    public int? CamISO
+    {
+        get
+        {
+            if (Cam == null) return null;
+            return AvValues.GetValue(Cam.GetInt32Setting(PropertyID.ISO)).IntValue;
+        }
+    }
 
     /// Percent
     private float _cropWidth = 50f;
@@ -209,4 +326,50 @@
         }
     }
 
+    public int Bulb { get; set; }
+
+    public bool UseBulb { get; set; }
+
+    void on_selectedCamChange(ChangeEventArgs? e)
+    {
+        if (e == null) return;
+        if (e.Value == null) return;
+
+        var newId = (long)e.Value;
+
+        this.Cam = camSv.Cameras.Where(cam => cam.ID == newId).First();
+    }
+
+    void on_avChange(ChangeEventArgs? e)
+    {
+        if (e == null) return;
+        if (e.Value == null) return;
+        if (Cam == null) return;
+
+        var newAv = (int)e.Value;
+
+        Cam.SetSetting(PropertyID.Av, AvValues.GetValue(newAv));
+    }
+
+    void on_tvChange(ChangeEventArgs? e)
+    {
+        if (e == null) return;
+        if (e.Value == null) return;
+        if (Cam == null) return;
+
+        var newTv = (int)e.Value;
+
+        Cam.SetSetting(PropertyID.Tv, TvValues.GetValue(newTv));
+    }
+
+    void on_isoChange(ChangeEventArgs? e)
+    {
+        if (e == null) return;
+        if (e.Value == null) return;
+        if (Cam == null) return;
+
+        var newISO = (int)e.Value;
+
+        Cam.SetSetting(PropertyID.ISO, ISOValues.GetValue(newISO));
+    }
 }

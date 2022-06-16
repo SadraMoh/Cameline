@@ -138,7 +138,7 @@
             this.STBothRdButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.STBothRdButton.Location = new System.Drawing.Point(6, 71);
             this.STBothRdButton.Name = "STBothRdButton";
-            this.STBothRdButton.Size = new System.Drawing.Size(53, 20);
+            this.STBothRdButton.Size = new System.Drawing.Size(52, 20);
             this.STBothRdButton.TabIndex = 0;
             this.STBothRdButton.Text = "Both";
             this.STBothRdButton.UseVisualStyleBackColor = true;
@@ -150,7 +150,7 @@
             this.STComputerRdButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.STComputerRdButton.Location = new System.Drawing.Point(6, 45);
             this.STComputerRdButton.Name = "STComputerRdButton";
-            this.STComputerRdButton.Size = new System.Drawing.Size(84, 20);
+            this.STComputerRdButton.Size = new System.Drawing.Size(83, 20);
             this.STComputerRdButton.TabIndex = 0;
             this.STComputerRdButton.Text = "Computer";
             this.STComputerRdButton.UseVisualStyleBackColor = true;
@@ -163,7 +163,7 @@
             this.STCameraRdButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.STCameraRdButton.Location = new System.Drawing.Point(6, 19);
             this.STCameraRdButton.Name = "STCameraRdButton";
-            this.STCameraRdButton.Size = new System.Drawing.Size(74, 20);
+            this.STCameraRdButton.Size = new System.Drawing.Size(73, 20);
             this.STCameraRdButton.TabIndex = 0;
             this.STCameraRdButton.TabStop = true;
             this.STCameraRdButton.Text = "Camera";
@@ -176,7 +176,7 @@
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.Location = new System.Drawing.Point(242, 46);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(53, 16);
+            this.label4.Size = new System.Drawing.Size(52, 16);
             this.label4.TabIndex = 3;
             this.label4.Text = "Bulb (s)";
             // 
@@ -186,7 +186,7 @@
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.Location = new System.Drawing.Point(106, 74);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(30, 16);
+            this.label3.Size = new System.Drawing.Size(29, 16);
             this.label3.TabIndex = 3;
             this.label3.Text = "ISO";
             // 
@@ -196,7 +196,7 @@
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(106, 47);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(24, 16);
+            this.label2.Size = new System.Drawing.Size(23, 16);
             this.label2.TabIndex = 3;
             this.label2.Text = "Tv";
             // 
@@ -206,7 +206,7 @@
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(106, 20);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(24, 16);
+            this.label1.Size = new System.Drawing.Size(23, 16);
             this.label1.TabIndex = 3;
             this.label1.Text = "Av";
             // 
@@ -253,6 +253,7 @@
             0,
             0,
             0});
+            this.BulbUpDo.ValueChanged += new System.EventHandler(this.BulbUpDo_ValueChanged);
             // 
             // ISOCoBox
             // 
@@ -436,7 +437,7 @@
             this.SessionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SessionLabel.Location = new System.Drawing.Point(6, 16);
             this.SessionLabel.Name = "SessionLabel";
-            this.SessionLabel.Size = new System.Drawing.Size(110, 16);
+            this.SessionLabel.Size = new System.Drawing.Size(109, 16);
             this.SessionLabel.TabIndex = 8;
             this.SessionLabel.Text = "No open session";
             // 

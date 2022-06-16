@@ -115,8 +115,6 @@ $card-border-color: #3E3E3E;
 
 $card-padding: 12px;
 
-$dropdown-background: #2a2a2a;
-
 @mixin card {
     background-color: $material-1;
     @include shadow-m;

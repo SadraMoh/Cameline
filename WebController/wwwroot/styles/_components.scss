@@ -47,6 +47,9 @@ $control-background: #2A2A2A;
 $control-border-color: #4D4D4D;
 $control-border: 1px solid $border-color;
 
+$control-disabled-background: lighten($control-background, 12%);
+$control-disabled-color: $text-3;
+
 $control-height: 36px;
 
 .control {
@@ -64,6 +67,11 @@ $control-height: 36px;
     @include border-def-radius;
 }
 
+.control.disabled {
+    background-color: $control-disabled-background;
+    color: $control-disabled-color;
+}
+
 $control-button-background: #373737;
 
 button.control, .material-symbols-sharp.control {
@@ -78,8 +86,6 @@ button.control:hover {
     @include transs;
     transition-property: background-color;
 }
-
-
 
 .invisibox {
     background: transparent;
@@ -96,6 +102,8 @@ button.control:hover {
 
 .range {
     margin: 0 8px;
+    width: 100%;
+    min-width: 150px;
     /* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
     &::-webkit-slider-thumb, &::-moz-range-thumb {
         -webkit-appearance: none;
@@ -118,8 +126,8 @@ button.control:hover {
 .textbox:read-only,
 .textarea:disabled,
 .textarea:read-only {
-    background-color: lighten($control-background, 12%);
-    color: $text-3;
+    background-color: $control-disabled-background;
+    color: $control-disabled-color;
     cursor: text;
 }
 
@@ -177,6 +185,11 @@ button.control:hover {
     }
 }
 
+.combo {
+    padding: 4px 8px;
+    width: 100%;
+}
+
 .fg {
     @include col;
     margin-bottom: $gap-s;
@@ -220,6 +233,7 @@ button.control:hover {
 /* --- {drop} --- */
 
 $drop-offset: 8px;
+$dropdown-background: #2a2a2a;
 
 .pos-relative {
     position: relative;
@@ -389,8 +403,59 @@ $table-padding: 8px;
 
 // -------------------- Implementations -------------------- //
 
+.flex-1 {
+    flex: 1;
+}
+
+.flex-2 {
+    flex: 2;
+}
+
+.flex-3 {
+    flex: 3;
+}
+
+.flex-4 {
+    flex: 4;
+}
+
+.flex-5 {
+    flex: 5;
+}
+
+.flex-6 {
+    flex: 6;
+}
+
+.gap-xs {
+    gap: $gap-xs
+}
+
+.gap-s {
+    gap: $gap-s
+}
+
+.gap-m {
+    gap: $gap-m
+}
+
+.gap-l {
+    gap: $gap-l
+}
+
+.gap-xl {
+    gap: $gap-xl
+}
+
 .card {
     @include card;
+}
+
+.card {
+    hr {
+        margin-left: -$card-padding;
+        margin-right: -$card-padding;
+    }
 }
 
 .mat-1 {

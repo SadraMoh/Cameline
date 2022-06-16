@@ -246,10 +246,9 @@ $default-panel-width: 324px;
 
 .drive {
     --info-width: #{$default-panel-width};
-    --properties-width: #{$default-panel-width};
     //-----------//
     display: grid;
-    grid-template-columns: var(--info-width, #{$default-panel-width}) auto var(--properties-width, #{$default-panel-width});
+    grid-template-columns: var(--info-width, #{$default-panel-width}) auto;
     grid-template-rows: 1fr;
     background-color: $background;
     flex: 1; // height: 100%;
@@ -297,6 +296,7 @@ $default-panel-width: 324px;
         align-items: center;
         -webkit-justify-content: center;
         justify-content: center;
+        position: relative;
 
         .panel {
             margin: auto;

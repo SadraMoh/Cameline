@@ -345,6 +345,11 @@ namespace WinFormsExample
             LiveViewButton.Text = "Start LV";
         }
 
+        private void BulbUpDo_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
         private void RefreshCamera()
         {
             CameraListBox.Items.Clear();
