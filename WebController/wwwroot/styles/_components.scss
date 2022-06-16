@@ -194,10 +194,14 @@ button.control:hover {
     @include col;
     margin-bottom: $gap-s;
 
-    > label:first-child,
+    > label:first-child:not(.checkbox),
     .fg-label {
         margin-bottom: $gap-xs;
     }
+}
+
+.fg:last-child {
+    margin-bottom: 0;
 }
 
 .fh {
@@ -455,6 +459,10 @@ $table-padding: 8px;
     hr {
         margin-left: -$card-padding;
         margin-right: -$card-padding;
+        height: 1px;
+        width: calc(100% + #{2 * $card-padding});
+        background: lighten($material-1, 8%);
+        margin-bottom: $gap-s;
     }
 }
 

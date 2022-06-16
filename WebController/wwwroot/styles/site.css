@@ -303,9 +303,13 @@ button.control:hover {
   flex-wrap: nowrap;
   margin-bottom: 12px;
 }
-.fg > label:first-child,
+.fg > label:first-child:not(.checkbox),
 .fg .fg-label {
   margin-bottom: 8px;
+}
+
+.fg:last-child {
+  margin-bottom: 0;
 }
 
 .fh {
@@ -535,6 +539,10 @@ drop[direction=left] {
 .card hr {
   margin-left: -12px;
   margin-right: -12px;
+  height: 1px;
+  width: calc(100% + 24px);
+  background: #4b4b4b;
+  margin-bottom: 12px;
 }
 
 .mat-1 {
@@ -670,6 +678,7 @@ a:hover {
 button {
   cursor: pointer;
   font-size: 1em;
+  background-color: #2A2A2A;
 }
 
 .hidden {

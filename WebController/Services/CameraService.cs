@@ -95,7 +95,7 @@ namespace WebController.Services
         /// </summary>
         /// <param name="cam"></param>
         /// <param name="bulbUpVal"></param>
-        public void Capture(Camera cam, int bulbUpVal = -1)
+        public async Task<DownloadInfo> Capture(Camera cam, int bulbUpVal = -1)
         {
             try
             {
@@ -109,10 +109,23 @@ namespace WebController.Services
                     alertSv.Notify("Capturing...");
                     cam.TakePhotoAsync();
                 }
+
+                var promise = new TaskCompletionSource<DownloadInfo>();
+
+                DownloadHandler stopWaiting = (Camera sender, DownloadInfo Info) => promise.SetResult(Info);
+                cam.DownloadReady += stopWaiting;
+
+                DownloadInfo info = await promise.Task.WaitAsync(TimeSpan.FromMilliseconds(TIMEOUTMILISECONDS));
+
+                cam.DownloadReady -= stopWaiting;
+
+                return info;
+
             }
             catch (Exception ex)
             {
                 alertSv.Error(ex);
+                throw;
             }
         }
 

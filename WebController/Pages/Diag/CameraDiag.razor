@@ -5,25 +5,40 @@
 
     <h3>@Camera.DeviceName</h3>
 
-    <dl>
-        <dt>DeviceName</dt>
-        <dd>@Camera.DeviceName</dd>
+    <div class="row gap-l">
+        <dl>
+            <dt>DeviceName</dt>
+            <dd>@Camera.DeviceName</dd>
 
-        <dt>ID</dt>
-        <dd>@Camera.ID</dd>
+            <dt>ID</dt>
+            <dd>@Camera.ID</dd>
 
-        <dt>IsLiveViewOn</dt>
-        <dd>@Camera.IsLiveViewOn</dd>
+            <dt>IsLiveViewOn</dt>
+            <dd>@Camera.IsLiveViewOn</dd>
 
-        <dt>IsRecordAvailable</dt>
-        <dd>@Camera.IsRecordAvailable</dd>
+            <dt>IsRecordAvailable</dt>
+            <dd>@Camera.IsRecordAvailable</dd>
 
-        <dt>IsDisposed</dt>
-        <dd>@Camera.IsDisposed</dd>
+            <dt>IsDisposed</dt>
+            <dd>@Camera.IsDisposed</dd>
 
-        <dt>Session Open</dt>
-        <dd>@Camera.SessionOpen</dd>
-    </dl>
+            <dt>Session Open</dt>
+            <dd>@Camera.SessionOpen</dd>
+        </dl>
+        @if (Camera.SessionOpen)
+        {
+            <dl>
+                <dt>Av</dt>
+                <dd>@(AvValues.GetValue(Camera.GetInt32Setting(PropertyID.Av)).StringValue)</dd>
+
+                @*<dt>Tv</dt>
+            <dd>@(AvValues.GetValue(Camera.GetInt32Setting(PropertyID.Tv)).StringValue)</dd>*@
+
+                <dt>ISO</dt>
+                <dd>@(AvValues.GetValue(Camera.GetInt32Setting(PropertyID.ISO)).StringValue)</dd>
+            </dl>
+        }
+    </div>
 
     @if (!Camera.SessionOpen)
     {
@@ -32,9 +47,9 @@
     else
     {
         <button @onclick="() => camSv.CloseSession(Camera)">Close Session</button>
+        <button disabled="@(!Camera.SessionOpen)" @onclick="() => camSv.Capture(Camera)">Capture</button>
     }
 
-    <button disabled="@(!Camera.SessionOpen)" @onclick="() => camSv.Capture(Camera)">Capture</button>
 
     <br />
 
@@ -43,7 +58,7 @@
     <button disabled="@(!Camera.SessionOpen || Camera.IsLiveViewOn)" @onclick="() => camStartLiveView(Camera)">Start</button>
     <button disabled="@(!Camera.SessionOpen || !Camera.IsLiveViewOn)" @onclick="() => camStopLiveView(Camera)">Stop</button>
 
-    <img id="imgLive" style="width: 450px; height: 300px;" width="450" height="300"/>
+    <img id="imgLive" style="width: 450px; height: 300px;" width="450" height="300" />
 
     <button @onclick="invoke">Invoke Js</button>
 

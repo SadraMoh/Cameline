@@ -1,4 +1,5 @@
 ﻿@inject CameraService camSv
+@inject AlertService alertSv
 
 <div class="workbench">
 
@@ -118,6 +119,7 @@
                         <label>Camera</label>
                         <div class="fh">
                             <select class="control combo" @onchange="on_selectedCamChange">
+                                <option value="">None</option>
                                 @foreach (var cam in camSv.Cameras)
                                 {
                                     <option selected="@(Cam?.ID == cam.ID)" value="@cam.ID">@cam.DeviceName</option>
@@ -167,14 +169,6 @@
                             <div class="flex-1"></div>
                         </div>
                         <hr />
-                        <div class="fg">
-                            <label class="checkbox">
-                                <input type="checkbox" value="" @bind="UseBulb" />
-                                <span class="text">
-                                    Bulb mode
-                                </span>
-                            </label>
-                        </div>
                     }
                     @if (UseBulb)
                     {
@@ -260,7 +254,7 @@
         get
         {
             if (Cam == null) return null;
-            return AvValues.GetValue(Cam.GetInt32Setting(PropertyID.Tv)).IntValue;
+            return TvValues.GetValue(Cam.GetInt32Setting(PropertyID.Tv)).IntValue;
         }
     }
 
@@ -269,7 +263,7 @@
         get
         {
             if (Cam == null) return null;
-            return AvValues.GetValue(Cam.GetInt32Setting(PropertyID.ISO)).IntValue;
+            return ISOValues.GetValue(Cam.GetInt32Setting(PropertyID.ISO)).IntValue;
         }
     }
 
@@ -328,16 +322,34 @@
 
     public int Bulb { get; set; }
 
-    public bool UseBulb { get; set; }
+    public bool UseBulb
+    {
+        get
+        {
+            if (!CamTv.HasValue) return false;
+            var bulb = TvList.Where(tv => tv.StringValue == "Bulb").First();
+
+            return CamTv == bulb.IntValue;
+        }
+    }
 
     void on_selectedCamChange(ChangeEventArgs? e)
     {
         if (e == null) return;
         if (e.Value == null) return;
 
-        var newId = (long)e.Value;
+        if (!long.TryParse((string)e.Value, out long newId))
+        {
+            if (this.Cam?.SessionOpen ?? false) this.Cam.CloseSession();
+
+            this.Cam = null;
+            return;
+        }
 
         this.Cam = camSv.Cameras.Where(cam => cam.ID == newId).First();
+
+        if (!this.Cam.SessionOpen) this.Cam.OpenSession();
+
     }
 
     void on_avChange(ChangeEventArgs? e)
@@ -346,9 +358,21 @@
         if (e.Value == null) return;
         if (Cam == null) return;
 
-        var newAv = (int)e.Value;
+        var newAv = int.Parse((string)e.Value);
+        int oldAv = this.CamAv ?? 0;
 
-        Cam.SetSetting(PropertyID.Av, AvValues.GetValue(newAv));
+        try
+        {
+            Cam.SetSetting(PropertyID.Av, AvValues.GetValue(newAv));
+        }
+        catch (Exception ex)
+        {
+            alertSv.Error(ex.Message);
+            alertSv.Notify($"falling back to previous value {oldAv}");
+            Cam.SetSetting(PropertyID.Av, AvValues.GetValue(oldAv));
+        }
+
+        StateHasChanged();
     }
 
     void on_tvChange(ChangeEventArgs? e)
@@ -357,7 +381,7 @@
         if (e.Value == null) return;
         if (Cam == null) return;
 
-        var newTv = (int)e.Value;
+        var newTv = int.Parse((string)e.Value);
 
         Cam.SetSetting(PropertyID.Tv, TvValues.GetValue(newTv));
     }
@@ -368,8 +392,8 @@
         if (e.Value == null) return;
         if (Cam == null) return;
 
-        var newISO = (int)e.Value;
+        var newISO = int.Parse((string)e.Value);
 
         Cam.SetSetting(PropertyID.ISO, ISOValues.GetValue(newISO));
     }
-}
+    }
