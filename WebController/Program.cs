@@ -1,6 +1,10 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.AspNetCore.ResponseCompression;
+
 using WebController.Services;
+using WebController.Hubs;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +14,13 @@ builder.Services.AddServerSideBlazor();
 
 builder.Services.AddSingleton<CameraService>();
 builder.Services.AddSingleton<AlertService>();
+//builder.Services.AddSignalR();
+
+builder.Services.AddResponseCompression(opts =>
+{
+    opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
+        new[] { "application/octet-stream" });
+});
 
 var app = builder.Build();
 
@@ -21,6 +32,8 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.UseResponseCompression();
+
 app.UseHttpsRedirection();
 
 app.UseStaticFiles();
@@ -31,6 +44,7 @@ app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();
     endpoints.MapBlazorHub();
+    endpoints.MapHub<LiveHub>("/liveHub");
     endpoints.MapFallbackToPage("/_Host");
 });
 

@@ -5,6 +5,8 @@
 
     <h3>@Camera.DeviceName</h3>
 
+    <button @onclick="invoke">Invoke Js</button>
+
     <div class="row gap-l">
         <dl>
             <dt>DeviceName</dt>
@@ -60,8 +62,6 @@
 
     <img id="imgLive" style="width: 450px; height: 300px;" width="450" height="300" />
 
-    <button @onclick="invoke">Invoke Js</button>
-
 </div>
 
 @code {
@@ -74,7 +74,11 @@
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
+        {
             module = await js.InvokeAsync<IJSObjectReference>("import", "./modules/CameraDiag.module.js");
+            module?.InvokeVoidAsync("signalinit");
+        }
+
     }
 
     async Task camStartLiveView(Camera cam)
@@ -93,7 +97,7 @@
     {
         Console.WriteLine("sync " + Camera.DeviceName);
 
-        Camera.LiveViewUpdated += Camera_LiveViewUpdated;
+        //Camera.LiveViewUpdated += Camera_LiveViewUpdated;
 
         return base.OnParametersSetAsync();
     }
@@ -105,7 +109,9 @@
 
     private void invoke()
     {
-        module?.InvokeVoidAsync("showPrompt");
+        module?.InvokeVoidAsync("subscribe", Camera.ID);
+        //module?.InvokeVoidAsync("ping");
+        //module?.InvokeVoidAsync("showPrompt");
     }
 
 }

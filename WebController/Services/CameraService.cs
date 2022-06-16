@@ -25,6 +25,11 @@ namespace WebController.Services
 
         const int TIMEOUTMILISECONDS = 5000;
 
+        /// <summary>
+        /// fired whenever any camera has a new image
+        /// </summary>
+        public event LiveViewUpdate? Broadcast;
+
         public CameraService(AlertService alertSv)
         {
             GetCameras();
@@ -166,7 +171,11 @@ namespace WebController.Services
         {
             // Heavy
             LiveImageStream = img;
-            alertSv.Event(nameof(Camera_LiveViewUpdated), "length: " + img.Length);
+
+            // Broadcast this image
+            Broadcast?.Invoke(sender, img);
+
+            // alertSv.Event(nameof(Camera_LiveViewUpdated), "length: " + img.Length);
         }
 
         private void Camera_LiveViewStopped(Camera sender)
