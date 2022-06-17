@@ -38,11 +38,12 @@ namespace WebController.Controllers
         }
 
         [HttpGet("[action]")]
-        public async Task<FileStreamResult> Live()
+        public async Task<FileStreamResult> Live(long cameraId)
         {
-            if (camSv.LiveImageStream == null) throw new FileNotFoundException();
+            if (!camSv.StreamingCameras.TryGetValue(cameraId, out Stream? stream))
+                throw new FileNotFoundException("Camera not found");
 
-            var stream = camSv.LiveImageStream;
+            if (stream == null) throw new FileNotFoundException("Stream is null"); 
 
             byte[] bytes;
             using (var memoryStream = new MemoryStream())
@@ -54,8 +55,11 @@ namespace WebController.Controllers
             //string base64 = Convert.ToBase64String(bytes);
             //new MemoryStream(System.Text.Encoding.UTF8.GetBytes(base64));
 
+            //var memoryStream = new MemoryStream(bytes);
+            //stream.CopyTo(memoryStream);
+
             var result = new FileStreamResult(new MemoryStream(bytes), "image/jpg");
-            result.FileDownloadName = CameraService.LIVE_KEY;
+            result.FileDownloadName = $"{CameraService.LIVE_KEY}_{cameraId}_{DateTime.Now.Ticks}";
 
             return result;
         }

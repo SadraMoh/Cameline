@@ -4,6 +4,8 @@ using System.IO;
 using System.Threading;
 using EOSDigital.API;
 using EOSDigital.SDK;
+using Microsoft.AspNetCore.SignalR;
+using WebController.Hubs;
 
 namespace WebController.Services
 {
@@ -19,24 +21,30 @@ namespace WebController.Services
 
         private bool isInit = false;
 
-        public Stream? LiveImageStream;
-
         public static readonly string LIVE_KEY = "live";
 
         const int TIMEOUTMILISECONDS = 5000;
+
+        public Dictionary<long, Stream?> StreamingCameras = new Dictionary<long, Stream?>();
+
+        public readonly List<(long camId, Guid token)> Subscriptions = new();
 
         /// <summary>
         /// fired whenever any camera has a new image
         /// </summary>
         public event LiveViewUpdate? Broadcast;
 
-        public CameraService(AlertService alertSv)
+        private readonly IHubContext<LiveHub> _liveHub;
+
+
+        public CameraService(AlertService alertSv, IHubContext<LiveHub> hubContext)
         {
             GetCameras();
 
             APIHandler.CameraAdded += APIHandler_CameraAdded;
 
             this.alertSv = alertSv;
+            this._liveHub = hubContext;
 
             isInit = true;
 
@@ -169,17 +177,20 @@ namespace WebController.Services
 
         private void Camera_LiveViewUpdated(Camera sender, Stream img)
         {
-            // Heavy
-            LiveImageStream = img;
+            StreamingCameras[sender.ID] = img;
 
             // Broadcast this image
             Broadcast?.Invoke(sender, img);
+
+            _liveHub.Clients.All.SendAsync("LiveUpdate", sender.ID);
 
             // alertSv.Event(nameof(Camera_LiveViewUpdated), "length: " + img.Length);
         }
 
         private void Camera_LiveViewStopped(Camera sender)
         {
+            StreamingCameras.Remove(sender.ID);
+
             alertSv.Event(nameof(Camera_LiveViewStopped), sender.DeviceName, "IsLiveViewOn: " + sender.IsLiveViewOn);
         }
 
@@ -187,6 +198,8 @@ namespace WebController.Services
 
         public async Task LiveView_Start(Camera cam)
         {
+            StreamingCameras.TryAdd(cam.ID, null);
+
             if (cam.IsLiveViewOn) return;
 
             var promise = new TaskCompletionSource();

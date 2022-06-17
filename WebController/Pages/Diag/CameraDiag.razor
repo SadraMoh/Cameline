@@ -62,6 +62,16 @@
 
     <img id="imgLive" style="width: 450px; height: 300px;" width="450" height="300" />
 
+    <hr />
+
+    <div>
+        <h4>Streamers</h4>
+        @foreach (var streamer in camSv.StreamingCameras.Keys)
+        {
+            <div>@streamer</div>
+        }
+    </div>
+
 </div>
 
 @code {
