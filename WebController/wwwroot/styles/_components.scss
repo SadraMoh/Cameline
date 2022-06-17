@@ -87,6 +87,15 @@ button.control:hover {
     transition-property: background-color;
 }
 
+button.control.primary {
+    background-color: $primary;
+    border: none;
+}
+
+button.control.primary:hover {
+    background-color: lighten($primary, 12%);
+}
+
 .invisibox {
     background: transparent;
     color: $text-2;
@@ -105,7 +114,7 @@ button.control:hover {
     width: 100%;
     min-width: 150px;
     /* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
-    &::-webkit-slider-thumb, &::-moz-range-thumb {
+    &::-webkit-slider-thumb {
         -webkit-appearance: none;
         appearance: none;
         cursor: pointer;

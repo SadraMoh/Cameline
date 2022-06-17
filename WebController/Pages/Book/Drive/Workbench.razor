@@ -1,192 +1,204 @@
 ﻿@inject CameraService camSv
 @inject AlertService alertSv
+@inject IJSRuntime js
 
 <div class="workbench">
 
-    <div class="bar fh">
+    <div class="bar row">
 
-        <div class="drop-parent">
-            <button class="control">
-                <span class="material-symbols-sharp">crop</span>
-            </button>
-            <drop mode="hover" direction="top">
-                <div class="card col">
-                    <div class="fg">
-                        <label>Offset X</label>
-                        <div class="fh">
-                            <div class="control">
-                                <input class="invisibox" style="width: 6ch" type="text" @bind="cropX" />
-                            </div>
-                            <div class="control">
-                                <input class="range" step="1" min="0" max="100" type="range" @bind="cropX" @bind:event="oninput" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="fg">
-                        <label>Offset Y</label>
-                        <div class="fh">
-                            <div class="control">
-                                <input class="invisibox" style="width: 6ch" type="text" @bind="cropY" />
-                            </div>
-                            <div class="control">
-                                <input class="range" step="1" min="0" max="100" type="range" @bind="cropY" @bind:event="oninput" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="fg">
-                        <label>Width</label>
-                        <div class="fh">
-                            <div class="control">
-                                <input class="invisibox" style="width: 6ch" type="text" @bind="cropWidth" />
-                            </div>
-                            <div class="control">
-                                <input class="range" step="1" min="10" max="100" type="range" @bind="cropWidth" @bind:event="oninput" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="fg">
-                        <label>Height</label>
-                        <div class="fh">
-                            <div class="control">
-                                <input class="invisibox" style="width: 6ch" type="text" @bind="cropHeight" />
-                            </div>
-                            <div class="control">
-                                <input class="range" step="1" min="10" max="100" type="range" @bind="cropHeight" @bind:event="oninput" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </drop>
-        </div>
-
-        <div class="drop-parent">
-            <button class="control">
-                <span class="material-symbols-sharp">autorenew</span>
-            </button>
-            <drop mode="hover" direction="top">
-                <div class="card col">
-                    <div class="fg">
-                        <label>Rotation</label>
-                        <div class="fh">
-                            <div class="control">
-                                <input class="invisibox" style="width: 7ch" type="text" @bind="cropRotation" />
-                            </div>
-                            <div class="control">
-                                <input class="range" step="0.2" min="-45" max="45" type="range" @bind="cropRotation" @bind:event="oninput" />
-                            </div>
-                        </div>
-                    </div>
-                    <div class="fg">
-                        <label class="checkbox">
-                            <input type="checkbox" value="" @bind="cropFlip" />
-                            <span class="text">
-                                Flip
-                            </span>
-                        </label>
-                    </div>
-                </div>
-            </drop>
-        </div>
-
-        <div class="drop-parent">
-            <button class="control">
-                <span class="material-symbols-sharp">search</span>
-            </button>
-            <drop mode="hover" direction="top">
-                <div class="card col">
-                    <div class="fg">
-                        <label>Zoom</label>
-                        <div class="fh">
-                            <button class="control">
-                                <span class="material-symbols-sharp">zoom_in</span>
-                            </button>
-                            <button class="control">
-                                <span class="material-symbols-sharp">zoom_out</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </drop>
-        </div>
-
-        <div class="drop-parent">
-            <button class="control">
-                <span class="material-symbols-sharp">photo_camera</span>
-            </button>
-            <drop mode="hover" direction="right">
-                <div class="card col" style="min-width: 300px">
-                    <div class="fg">
-                        <label>Camera</label>
-                        <div class="fh">
-                            <select class="control combo" @onchange="on_selectedCamChange">
-                                <option value="">None</option>
-                                @foreach (var cam in camSv.Cameras)
-                                {
-                                    <option selected="@(Cam?.ID == cam.ID)" value="@cam.ID">@cam.DeviceName</option>
-                                }
-                            </select>
-                        </div>
-                    </div>
-                    @if (Cam != null)
-                    {
-                        <hr />
-                        <div class="row gap-m">
-                            <div class="fg flex-1">
-                                <label>Av</label>
-                                <div class="fh">
-                                    <select class="control combo" @onchange="on_avChange">
-                                        @foreach (var av in AvList)
-                                        {
-                                            <option selected="@(CamAv == av.IntValue)" value="@av.IntValue">@av.StringValue</option>
-                                        }
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="fg flex-1">
-                                <label>Tv</label>
-                                <div class="fh">
-                                    <select class="control combo" @onchange="on_tvChange">
-                                        @foreach (var tv in TvList)
-                                        {
-                                            <option value="@(tv.IntValue)">@tv.StringValue</option>
-                                        }
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row gap-m">
-                            <div class="fg flex-1">
-                                <label>ISO</label>
-                                <div class="fh">
-                                    <select class="control combo" @onchange="on_isoChange">
-                                        @foreach (var iso in ISOList)
-                                        {
-                                            <option value="@(iso.IntValue)">@iso.StringValue</option>
-                                        }
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="flex-1"></div>
-                        </div>
-                        <hr />
-                    }
-                    @if (UseBulb)
-                    {
-                        <div class="fg flex-1">
-                            <label>Bulb</label>
+        <div class="fh">
+            <div class="drop-parent">
+                <button class="control">
+                    <span class="material-symbols-sharp">crop</span>
+                </button>
+                <drop mode="hover" direction="top">
+                    <div class="card col">
+                        <div class="fg">
+                            <label>Offset X</label>
                             <div class="fh">
                                 <div class="control">
-                                    <input class="invisibox" disabled="@(!UseBulb)" style="width: 9ch" type="text" @bind="Bulb" />
+                                    <input class="invisibox" style="width: 6ch" type="text" @bind="cropX" />
                                 </div>
-                                <div class="control flex-1">
-                                    <input class="range" disabled="@(!UseBulb)" step="1" min="0" max="100000" type="range" @bind="Bulb" @bind:event="oninput" />
+                                <div class="control">
+                                    <input class="range" step="1" min="0" max="100" type="range" @bind="cropX" @bind:event="oninput" />
                                 </div>
                             </div>
                         </div>
-                    }
-                </div>
-            </drop>
+                        <div class="fg">
+                            <label>Offset Y</label>
+                            <div class="fh">
+                                <div class="control">
+                                    <input class="invisibox" style="width: 6ch" type="text" @bind="cropY" />
+                                </div>
+                                <div class="control">
+                                    <input class="range" step="1" min="0" max="100" type="range" @bind="cropY" @bind:event="oninput" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="fg">
+                            <label>Width</label>
+                            <div class="fh">
+                                <div class="control">
+                                    <input class="invisibox" style="width: 6ch" type="text" @bind="cropWidth" />
+                                </div>
+                                <div class="control">
+                                    <input class="range" step="1" min="10" max="100" type="range" @bind="cropWidth" @bind:event="oninput" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="fg">
+                            <label>Height</label>
+                            <div class="fh">
+                                <div class="control">
+                                    <input class="invisibox" style="width: 6ch" type="text" @bind="cropHeight" />
+                                </div>
+                                <div class="control">
+                                    <input class="range" step="1" min="10" max="100" type="range" @bind="cropHeight" @bind:event="oninput" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </drop>
+            </div>
+
+            <div class="drop-parent">
+                <button class="control">
+                    <span class="material-symbols-sharp">autorenew</span>
+                </button>
+                <drop mode="hover" direction="top">
+                    <div class="card col">
+                        <div class="fg">
+                            <label>Rotation</label>
+                            <div class="fh">
+                                <div class="control">
+                                    <input class="invisibox" style="width: 7ch" type="text" @bind="cropRotation" />
+                                </div>
+                                <div class="control">
+                                    <input class="range" step="0.2" min="-45" max="45" type="range" @bind="cropRotation" @bind:event="oninput" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="fg">
+                            <label class="checkbox">
+                                <input type="checkbox" value="" @bind="cropFlip" />
+                                <span class="text">
+                                    Flip
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+                </drop>
+            </div>
+
+            <div class="drop-parent">
+                <button class="control">
+                    <span class="material-symbols-sharp">search</span>
+                </button>
+                <drop mode="hover" direction="top">
+                    <div class="card col">
+                        <div class="fg">
+                            <label>Zoom</label>
+                            <div class="fh">
+                                <button class="control">
+                                    <span class="material-symbols-sharp">zoom_in</span>
+                                </button>
+                                <button class="control">
+                                    <span class="material-symbols-sharp">zoom_out</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </drop>
+            </div>
+
+            <div class="drop-parent">
+                <button class="control">
+                    <span class="material-symbols-sharp">photo_camera</span>
+                </button>
+                <drop mode="hover" direction="right">
+                    <div class="card col" style="min-width: 300px">
+                        <div class="fg">
+                            <label>Camera</label>
+                            <div class="fh">
+                                <select class="control combo" @onchange="on_selectedCamChange">
+                                    <option value="">None</option>
+                                    @foreach (var cam in camSv.Cameras)
+                                    {
+                                        <option selected="@(Cam?.ID == cam.ID)" value="@cam.ID">@cam.DeviceName</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        @if (Cam != null)
+                        {
+                            <hr />
+                            <div class="row gap-m">
+                                <div class="fg flex-1">
+                                    <label>Av</label>
+                                    <div class="fh">
+                                        <select class="control combo" @onchange="on_avChange">
+                                            @foreach (var av in AvList)
+                                            {
+                                                <option selected="@(CamAv == av.IntValue)" value="@av.IntValue">@av.StringValue</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="fg flex-1">
+                                    <label>Tv</label>
+                                    <div class="fh">
+                                        <select class="control combo" @onchange="on_tvChange">
+                                            @foreach (var tv in TvList)
+                                            {
+                                                <option value="@(tv.IntValue)">@tv.StringValue</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row gap-m">
+                                <div class="fg flex-1">
+                                    <label>ISO</label>
+                                    <div class="fh">
+                                        <select class="control combo" @onchange="on_isoChange">
+                                            @foreach (var iso in ISOList)
+                                            {
+                                                <option value="@(iso.IntValue)">@iso.StringValue</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="flex-1"></div>
+                            </div>
+                            <hr />
+                        }
+                        @if (UseBulb)
+                        {
+                            <div class="fg flex-1">
+                                <label>Bulb</label>
+                                <div class="fh">
+                                    <div class="control">
+                                        <input class="invisibox" disabled="@(!UseBulb)" style="width: 9ch" type="text" @bind="Bulb" />
+                                    </div>
+                                    <div class="control flex-1">
+                                        <input class="range" disabled="@(!UseBulb)" step="1" min="0" max="100000" type="range" @bind="Bulb" @bind:event="oninput" />
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </drop>
+            </div>
         </div>
+
+        @if (Cam != null)
+        {
+            <div class="fh" style="margin-left:auto">
+                <button @onclick="toggleLiveView" class="control @(Cam.IsLiveViewOn ? "primary" : "")">
+                    <span class="material-symbols-sharp">@(Cam.IsLiveViewOn ? "play_circle" : "stop_circle")</span>
+                </button>
+            </div>
+        }
 
     </div>
 
@@ -213,12 +225,17 @@
                 </div>*@
             </div>
         </div>
-        <video class="video" style="@(cropFlip ? "scaleX(-1)" : "")"></video>
+
+        <!-- Liveview -->
+        <img id="imgLive" class="liveview-outlet" style="@(cropFlip ? "scaleX(-1)" : "")" />
+
     </div>
 
 </div>
 
 @code {
+
+    #region Props
 
     /// <summary>
     /// Selected Camera
@@ -333,6 +350,12 @@
         }
     }
 
+    private IJSObjectReference? module;
+
+    #endregion
+
+    #region events
+
     void on_selectedCamChange(ChangeEventArgs? e)
     {
         if (e == null) return;
@@ -396,4 +419,35 @@
 
         Cam.SetSetting(PropertyID.ISO, ISOValues.GetValue(newISO));
     }
+
+    #endregion
+
+    async Task toggleLiveView()
+    {
+        if (this.Cam == null) return;
+        if (this.module == null) return;
+
+        if (this.Cam.IsLiveViewOn)
+        {
+            await camSv.LiveView_Stop(this.Cam);
+            await module.InvokeVoidAsync("unsubscribeFromLiveView");
+        }
+        else
+        {
+            await camSv.LiveView_Start(this.Cam);
+            await module.InvokeVoidAsync("subscribeToLiveView", this.Cam.ID);
+        }
     }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            module = await js.InvokeAsync<IJSObjectReference>("import", "./modules/Workbench.module.js");
+            module?.InvokeVoidAsync("signalinit");
+        }
+
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+}

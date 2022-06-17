@@ -34,5 +34,11 @@ namespace WebController.Hubs
             await Clients.Caller.SendAsync("SubscriptionSuccess", subscriptionToken, cameraId);
         }
 
+        public async Task Unsubscribe(string token)
+        {
+            camSv.Subscriptions = camSv.Subscriptions.Where(i => i.token.ToString() == token).ToList();
+            await Clients.Caller.SendAsync("ReceiveMessage", "Unsubscribed");
+        }
+
     }
 }

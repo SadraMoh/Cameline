@@ -321,24 +321,29 @@ $default-panel-width: 324px;
         position: absolute;
         bottom: calc(100% + #{$gap-xs});
         @include shadow-m;
-        opacity: 0;
-        @include trans;
+        visibility:collapse;
+        left: 0;
+        right: 0;
     }
 
     .panel {
         background-color: $material-3;
+
+        .liveview-outlet {
+            min-width: 270px;
+            min-height: 480px;
+            max-width: calc(100vw - #{$default-panel-width + 100px});
+            height: auto;
+        }
     }
 }
 
 .workbench:hover {
     .bar {
-        opacity: 1;
-        @include transs;
+        visibility: visible;
     }
 
     .panel {
-        video {
-        }
     }
 }
 

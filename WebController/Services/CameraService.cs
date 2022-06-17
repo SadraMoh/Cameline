@@ -27,7 +27,7 @@ namespace WebController.Services
 
         public Dictionary<long, Stream?> StreamingCameras = new Dictionary<long, Stream?>();
 
-        public readonly List<(long camId, Guid token)> Subscriptions = new();
+        public List<(long camId, Guid token)> Subscriptions = new();
 
         /// <summary>
         /// fired whenever any camera has a new image
@@ -125,7 +125,7 @@ namespace WebController.Services
 
                 var promise = new TaskCompletionSource<DownloadInfo>();
 
-                DownloadHandler stopWaiting = (Camera sender, DownloadInfo Info) => promise.SetResult(Info);
+                DownloadHandler stopWaiting = (Camera sender, DownloadInfo Info) => promise.TrySetResult(Info);
                 cam.DownloadReady += stopWaiting;
 
                 DownloadInfo info = await promise.Task.WaitAsync(TimeSpan.FromMilliseconds(TIMEOUTMILISECONDS));
@@ -175,8 +175,15 @@ namespace WebController.Services
             alertSv.Event(nameof(Camera_ProgressChanged), cam?.DeviceName ?? "[UNKNOWN]", progress.ToString());
         }
 
+        private short _liveTapCounter = 0;
         private void Camera_LiveViewUpdated(Camera sender, Stream img)
         {
+            // broadcast only the [nth] updates for each camera;
+            if(_liveTapCounter++ != 1)
+                return;
+
+            _liveTapCounter = 0;
+
             StreamingCameras[sender.ID] = img;
 
             // Broadcast this image
@@ -204,7 +211,7 @@ namespace WebController.Services
 
             var promise = new TaskCompletionSource();
 
-            LiveViewUpdate stopWaiting = (Camera sender, Stream img) => promise.SetResult();
+            LiveViewUpdate stopWaiting = (Camera sender, Stream img) => promise.TrySetResult();
 
             cam.StartLiveView();
             cam.LiveViewUpdated += stopWaiting;
@@ -223,7 +230,7 @@ namespace WebController.Services
 
             var promise = new TaskCompletionSource();
 
-            CameraUpdateHandler stopWaiting = (Camera sender) => promise.SetResult();
+            CameraUpdateHandler stopWaiting = (Camera sender) => promise.TrySetResult();
 
             cam.StopLiveView();
             cam.LiveViewStopped += stopWaiting;

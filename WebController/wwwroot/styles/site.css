@@ -191,6 +191,15 @@ button.control:hover {
   transition-property: background-color;
 }
 
+button.control.primary {
+  background-color: #1473E6;
+  border: none;
+}
+
+button.control.primary:hover {
+  background-color: #4894ef;
+}
+
 .invisibox {
   background: transparent;
   color: #CBCBCB;
@@ -215,7 +224,7 @@ button.control:hover {
   /* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
   /* Mouse-over effects */
 }
-.range::-webkit-slider-thumb, .range::-moz-range-thumb {
+.range::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
   cursor: pointer;
@@ -891,16 +900,22 @@ button {
   position: absolute;
   bottom: calc(100% + 8px);
   box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.24);
-  opacity: 0;
-  transition: all ease 0.15s;
+  visibility: collapse;
+  left: 0;
+  right: 0;
 }
 .workbench .panel {
   background-color: #272727;
 }
+.workbench .panel .liveview-outlet {
+  min-width: 270px;
+  min-height: 480px;
+  max-width: calc(100vw - 424px);
+  height: auto;
+}
 
 .workbench:hover .bar {
-  opacity: 1;
-  transition: all ease 0.05s;
+  visibility: visible;
 }
 /* --- {cropper} --- */
 .cropper-container {
